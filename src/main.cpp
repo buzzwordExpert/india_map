@@ -18,7 +18,6 @@
 #include <algorithm>
 #include <vector>
 #include "esp_system.h"
-#include "adaptive.h"
 
 // --- CONFIG ---
 // #define DEBUG_165
@@ -586,7 +585,12 @@ int8_t getFirstCorrectAnswer(int questionIndex) {
   return correctAnswers[questionIndex][0];
 }
 
-Lang currentAdaptiveLang = LANG_HINDI;
+int findNextSequentialQuestion() {
+  for (int i = 0; i < TOTAL_QUESTIONS; i++) {
+    if (!questionsAsked[i]) return i;
+  }
+  return -1;
+}
 
 // =====================================================
 // QUIZ STATE MACHINE
@@ -643,9 +647,8 @@ bool          returnToQuizAfterScore = false;
 int    correctAnswersCount    = 0;
 int    wrongAnswersCount      = 0;
 int    totalQuestionsAnswered = 0;
-int8_t currentQuestionIndex  = -1;
-float  currentDifficulty       = 5.0f;
-bool   lastAnswerWasCorrect  = false;
+int8_t currentQuestionIndex   = -1;
+bool   lastAnswerWasCorrect   = false;
 
 unsigned long lastAnswerTime  = 0;
 const unsigned long ANSWER_COOLDOWN      = 300;
@@ -1188,7 +1191,6 @@ void resetBoard() {
   totalQuestionsAnswered = 0;
   memset(questionsAsked, 0, sizeof(questionsAsked));
   totalQuestionsAsked  = 0;
-  currentDifficulty    = 5.0f;
   ledState = LED_ALL_OFF;
   write595_all(ledState);
   flashResetLEDs();
@@ -1209,7 +1211,6 @@ void enterQuizMode() {
   correctAnswersCount    = 0;
   wrongAnswersCount      = 0;
   totalQuestionsAnswered = 0;
-  currentDifficulty      = 5.0f;
   playingScore           = false;
   scoreSequence          = SEQ_NONE;
   returnToQuizAfterScore = false;
@@ -1217,9 +1218,7 @@ void enterQuizMode() {
   resetAnswerLEDs();
   ledState = LED_ALL_OFF;
   write595_all(ledState);
-  currentQuestionIndex = findAdaptiveUnaskedQuestion(
-    currentAdaptiveLang, questionsAsked, totalQuestionsAsked, TOTAL_QUESTIONS
-  );
+  currentQuestionIndex = findNextSequentialQuestion();
   quizState = QUIZ_IDLE;
   openAndStartAudio(getModeAnnouncement(), true);
 }
@@ -1242,9 +1241,7 @@ void playQuestion() {
     quizState = QUIZ_PLAYING_QUESTION;
   } else {
     Serial.println("Question file missing, skipping...");
-    currentQuestionIndex = findAdaptiveUnaskedQuestion(
-      currentAdaptiveLang, questionsAsked, totalQuestionsAsked, TOTAL_QUESTIONS
-    );
+    currentQuestionIndex = findNextSequentialQuestion();
     if (currentQuestionIndex >= 0) playQuestion();
   }
 }
@@ -1256,17 +1253,12 @@ void nextQuestion() {
   resetAnswerLEDs();
   ledState = LED_ALL_OFF;
   write595_all(ledState);
-  currentQuestionIndex = findAdaptiveUnaskedQuestion(
-    currentAdaptiveLang, questionsAsked, totalQuestionsAsked, TOTAL_QUESTIONS
-  );
+  currentQuestionIndex = findNextSequentialQuestion();
   if (currentQuestionIndex == -1) {
     memset(questionsAsked, 0, sizeof(questionsAsked));
     totalQuestionsAsked = 0;
-    currentDifficulty   = 5.0f;
     Serial.println("\n=== QUESTIONS RESET ===");
-    currentQuestionIndex = findAdaptiveUnaskedQuestion(
-      currentAdaptiveLang, questionsAsked, totalQuestionsAsked, TOTAL_QUESTIONS
-    );
+    currentQuestionIndex = findNextSequentialQuestion();
   }
   if (currentQuestionIndex >= 0) playQuestion();
 }
@@ -1282,10 +1274,8 @@ void processAnswer(int8_t physicalSwitch) {
   totalQuestionsAnswered++;
   if (lastAnswerWasCorrect) {
     correctAnswersCount++;
-    currentDifficulty = std::min(12.9f, currentDifficulty + 0.5f);
   } else {
     wrongAnswersCount++;
-    currentDifficulty = std::max(1.0f, currentDifficulty - 0.5f);
   }
   Serial.print(lastAnswerWasCorrect ? "CORRECT" : "WRONG");
   Serial.print(" | Score: "); Serial.print(correctAnswersCount);
