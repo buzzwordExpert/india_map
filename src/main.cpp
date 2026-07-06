@@ -1,10 +1,4 @@
-/*
- * ============================================================
- * BHARAT — India Map Quiz Board (ESP32)
- * Hindi + English dual-language build
- * Fixed Memory Alignment Crashes, Glitching, & Threading
- * ============================================================
- */
+// Header Declarations
 
 #include <Arduino.h>
 #include "BluetoothA2DPSource.h"
@@ -44,9 +38,7 @@
 #define QUIZ_BUTTON_NUM  36   
 #define RESET_BUTTON_NUM 37   
 #define MODE_BUTTON_NUM  38   
-#define LANG_BUTTON_NUM  39   
-
-#define PUDUCHERRY_SWITCH_IDX 35   
+#define LANG_BUTTON_NUM  39     
 
 #define I2S_BCLK 26
 #define I2S_LRCK 25
@@ -344,7 +336,7 @@ String getNumberAudioPath(int n) {
 // =====================================================
 // QUIZ ANSWER KEY
 // =====================================================
-const std::vector<int8_t> correctAnswers[341] = { 
+const std::vector<int8_t> correctAnswers[87] = { 
   // Original 87 Questions
   {23},{12},{10},{2},{17},{24},{19},{7,5},{11},{4},      // Q1–10
   {16},{25},{26},{18},{21},{14},{9},{15},{13},{20},      // Q11–20
@@ -354,48 +346,17 @@ const std::vector<int8_t> correctAnswers[341] = {
   {26},{27},{13},{5},{26},{27},{14},{17},{25},{6},       // Q51–60
   {12},{9},{5},{27},{30},{4},{26},{8},{30},{5},          // Q61–70
   {28},{33},{31},{29},{28},{32},{33},{35},{34},{31},     // Q71–80
-  {21},{1},{6},{11},{33},{35},{28},                       // Q81–87
-  // Document 12 Questions (1 to 129)
-  {5},    {26},   {1},    {1},    {10},   {11},   {21},   {0},    {0},    {27}, 
-  {27},   {22},   {25},   {25},   {25},   {20},   {20},   {20},   {19},   {19}, 
-  {4},    {4},    {29},   {29},   {18},   {18},   {2},    {2},    {17},   {16}, 
-  {16},   {15},   {14},   {8},    {26},   {1},    {14},   {26},   {23},   {23}, 
-  {13},   {3},    {14},   {26},   {12},   {8},    {12},   {24},   {24},   {6},  
-  {25},   {6},    {6},    {21},   {33},   {5},    {5},    {2},    {27},   {25}, 
-  {1},    {20},   {2},    {19},   {19},   {5},    {5},    {11},   {19},   {0},  
-  {7},    {7},    {7},    {7},    {7},    {6},    {5,7},  {10,11},{25,26,27},{19,1,18,17,16,11,8,15}, 
-  {1,19}, {19,21,24,25,26},{25,10,11},{15,8,13},{10,11},{5,7,0},{19,21,22},{11,10,2},{21,19,18},{27,25,23,20}, 
-  {26,25,24,27},{28},  {32},   {31},   {30},   {28},   {33},   {35},   {31},   {34}, 
-  {29},   {35},   {29},   {30},   {35},   {28},   {33},   {32},   {33},   {30}, 
-  {29},   {28},   {31},   {28},   {32},   {31,29,35},{33,32},{35,32,33,34},{28,33},{31,30,34,29,28,35,33}, 
-  {32,33},{32,33},{28,29},{35,34},{28},   {32},   {28},   {33},   {34},         
-
-  // Grade 7 Questions (1 to 125)
-  {10},   {5},    {6},    {25},   {20},   {19},   {19},   {21},   {27},   {1},  
-  {6},    {19},   {10},   {1},    {23},   {27},   {25},   {22},   {10},   {25}, 
-  {27},   {25},   {20},   {18},   {1},    {21},   {21},   {25},   {27},   {5},  
-  {11},   {1},    {19},   {18},   {19},   {1},    {10},   {19},   {11},   {6},  
-  {14},   {20},   {6},    {25},   {20},   {6},    {10},   {0},    {11},   {7},  
-  {22},   {29},   {25},   {5},    {27},   {19},   {1},    {27},   {25},   {6},  
-  {19},   {25},   {21},   {1},    {6},    {5},    {19},   {19},   {18},   {26}, 
-  {27},   {6,25}, {25,21,18,6},{5,7,0},{11,20,23,27},{27,26,25,11,20,18,6},{6,4,29},{27,26,23,20,14,0},{10,26,27},{25,10,11}, 
-  {1,19}, {15,8,13,10},{27,25,22},{10,11},{21,18},{31},  {33},   {35},   {34},   {31}, 
-  {33},   {33},   {32},   {28},   {32},   {29},   {28},   {29},   {28},   {28}, 
-  {32},   {33},   {33},   {28},   {28},   {28},   {28},   {31},   {33},   {35}, 
-  {33,32,35,34,29},{35,34},{29,28},{33,32},{28,29},{33}, {28},   {28},   {33},   {29}, 
-  {31,29,35},{33,32},{29,28},{35,34},{31,33}                                    
+  {21},{1},{6},{11},{33},{35},{28},                       // Q81–87                                    
 };
 
-constexpr int QUESTION_BANK_SIZE = sizeof(correctAnswers) / sizeof(correctAnswers[0]);
-constexpr int TOTAL_QUESTIONS = 87;
-static_assert(TOTAL_QUESTIONS <= QUESTION_BANK_SIZE, "TOTAL_QUESTIONS exceeds answer key size");
-bool questionsAsked[QUESTION_BANK_SIZE] = {false};
+const uint8_t TOTAL_QUESTIONS = 87;
+bool questionsAsked[87]  = {false};
 int  totalQuestionsAsked = 0;
 
 // =====================================================
 // QUIZ QUESTIONS — 87 entries × 2 languages
 // =====================================================
-const char* const quizQuestions[341][SYS_LANG_COUNT] = {
+const char* const quizQuestions[87][SYS_LANG_COUNT] = {
   {"/Hindi/q1h.wav",  "/English/q1e.wav"},  {"/Hindi/q2h.wav",  "/English/q2e.wav"},
   {"/Hindi/q3h.wav",  "/English/q3e.wav"},  {"/Hindi/q4h.wav",  "/English/q4e.wav"},
   {"/Hindi/q5h.wav",  "/English/q5e.wav"},  {"/Hindi/q6h.wav",  "/English/q6e.wav"},
@@ -440,142 +401,7 @@ const char* const quizQuestions[341][SYS_LANG_COUNT] = {
   {"/Hindi/q83h.wav", "/English/q83e.wav"}, {"/Hindi/q84h.wav", "/English/q84e.wav"},
   {"/Hindi/q85h.wav", "/English/q85e.wav"}, {"/Hindi/q86h.wav", "/English/q86e.wav"},
   {"/Hindi/q87h.wav", "/English/q87e.wav"},
-
-  // 7_hi and 7_en series (1 to 129)
-  {"/7_hi/q1_hi.wav", "/7_en/q1_en.wav"},     {"/7_hi/q2_hi.wav", "/7_en/q2_en.wav"},
-  {"/7_hi/q3_hi.wav", "/7_en/q3_en.wav"},     {"/7_hi/q4_hi.wav", "/7_en/q4_en.wav"},
-  {"/7_hi/q5_hi.wav", "/7_en/q5_en.wav"},     {"/7_hi/q6_hi.wav", "/7_en/q6_en.wav"},
-  {"/7_hi/q7_hi.wav", "/7_en/q7_en.wav"},     {"/7_hi/q8_hi.wav", "/7_en/q8_en.wav"},
-  {"/7_hi/q9_hi.wav", "/7_en/q9_en.wav"},     {"/7_hi/q10_hi.wav", "/7_en/q10_en.wav"},
-  {"/7_hi/q11_hi.wav", "/7_en/q11_en.wav"},   {"/7_hi/q12_hi.wav", "/7_en/q12_en.wav"},
-  {"/7_hi/q13_hi.wav", "/7_en/q13_en.wav"},   {"/7_hi/q14_hi.wav", "/7_en/q14_en.wav"},
-  {"/7_hi/q15_hi.wav", "/7_en/q15_en.wav"},   {"/7_hi/q16_hi.wav", "/7_en/q16_en.wav"},
-  {"/7_hi/q17_hi.wav", "/7_en/q17_en.wav"},   {"/7_hi/q18_hi.wav", "/7_en/q18_en.wav"},
-  {"/7_hi/q19_hi.wav", "/7_en/q19_en.wav"},   {"/7_hi/q20_hi.wav", "/7_en/q20_en.wav"},
-  {"/7_hi/q21_hi.wav", "/7_en/q21_en.wav"},   {"/7_hi/q22_hi.wav", "/7_en/q22_en.wav"},
-  {"/7_hi/q23_hi.wav", "/7_en/q23_en.wav"},   {"/7_hi/q24_hi.wav", "/7_en/q24_en.wav"},
-  {"/7_hi/q25_hi.wav", "/7_en/q25_en.wav"},   {"/7_hi/q26_hi.wav", "/7_en/q26_en.wav"},
-  {"/7_hi/q27_hi.wav", "/7_en/q27_en.wav"},   {"/7_hi/q28_hi.wav", "/7_en/q28_en.wav"},
-  {"/7_hi/q29_hi.wav", "/7_en/q29_en.wav"},   {"/7_hi/q30_hi.wav", "/7_en/q30_en.wav"},
-  {"/7_hi/q31_hi.wav", "/7_en/q31_en.wav"},   {"/7_hi/q32_hi.wav", "/7_en/q32_en.wav"},
-  {"/7_hi/q33_hi.wav", "/7_en/q33_en.wav"},   {"/7_hi/q34_hi.wav", "/7_en/q34_en.wav"},
-  {"/7_hi/q35_hi.wav", "/7_en/q35_en.wav"},   {"/7_hi/q36_hi.wav", "/7_en/q36_en.wav"},
-  {"/7_hi/q37_hi.wav", "/7_en/q37_en.wav"},   {"/7_hi/q38_hi.wav", "/7_en/q38_en.wav"},
-  {"/7_hi/q39_hi.wav", "/7_en/q39_en.wav"},   {"/7_hi/q40_hi.wav", "/7_en/q40_en.wav"},
-  {"/7_hi/q41_hi.wav", "/7_en/q41_en.wav"},   {"/7_hi/q42_hi.wav", "/7_en/q42_en.wav"},
-  {"/7_hi/q43_hi.wav", "/7_en/q43_en.wav"},   {"/7_hi/q44_hi.wav", "/7_en/q44_en.wav"},
-  {"/7_hi/q45_hi.wav", "/7_en/q45_en.wav"},   {"/7_hi/q46_hi.wav", "/7_en/q46_en.wav"},
-  {"/7_hi/q47_hi.wav", "/7_en/q47_en.wav"},   {"/7_hi/q48_hi.wav", "/7_en/q48_en.wav"},
-  {"/7_hi/q49_hi.wav", "/7_en/q49_en.wav"},   {"/7_hi/q50_hi.wav", "/7_en/q50_en.wav"},
-  {"/7_hi/q51_hi.wav", "/7_en/q51_en.wav"},   {"/7_hi/q52_hi.wav", "/7_en/q52_en.wav"},
-  {"/7_hi/q53_hi.wav", "/7_en/q53_en.wav"},   {"/7_hi/q54_hi.wav", "/7_en/q54_en.wav"},
-  {"/7_hi/q55_hi.wav", "/7_en/q55_en.wav"},   {"/7_hi/q56_hi.wav", "/7_en/q56_en.wav"},
-  {"/7_hi/q57_hi.wav", "/7_en/q57_en.wav"},   {"/7_hi/q58_hi.wav", "/7_en/q58_en.wav"},
-  {"/7_hi/q59_hi.wav", "/7_en/q59_en.wav"},   {"/7_hi/q60_hi.wav", "/7_en/q60_en.wav"},
-  {"/7_hi/q61_hi.wav", "/7_en/q61_en.wav"},   {"/7_hi/q62_hi.wav", "/7_en/q62_en.wav"},
-  {"/7_hi/q63_hi.wav", "/7_en/q63_en.wav"},   {"/7_hi/q64_hi.wav", "/7_en/q64_en.wav"},
-  {"/7_hi/q65_hi.wav", "/7_en/q65_en.wav"},   {"/7_hi/q66_hi.wav", "/7_en/q66_en.wav"},
-  {"/7_hi/q67_hi.wav", "/7_en/q67_en.wav"},   {"/7_hi/q68_hi.wav", "/7_en/q68_en.wav"},
-  {"/7_hi/q69_hi.wav", "/7_en/q69_en.wav"},   {"/7_hi/q70_hi.wav", "/7_en/q70_en.wav"},
-  {"/7_hi/q71_hi.wav", "/7_en/q71_en.wav"},   {"/7_hi/q72_hi.wav", "/7_en/q72_en.wav"},
-  {"/7_hi/q73_hi.wav", "/7_en/q73_en.wav"},   {"/7_hi/q74_hi.wav", "/7_en/q74_en.wav"},
-  {"/7_hi/q75_hi.wav", "/7_en/q75_en.wav"},   {"/7_hi/q76_hi.wav", "/7_en/q76_en.wav"},
-  {"/7_hi/q77_hi.wav", "/7_en/q77_en.wav"},   {"/7_hi/q78_hi.wav", "/7_en/q78_en.wav"},
-  {"/7_hi/q79_hi.wav", "/7_en/q79_en.wav"},   {"/7_hi/q80_hi.wav", "/7_en/q80_en.wav"},
-  {"/7_hi/q81_hi.wav", "/7_en/q81_en.wav"},   {"/7_hi/q82_hi.wav", "/7_en/q82_en.wav"},
-  {"/7_hi/q83_hi.wav", "/7_en/q83_en.wav"},   {"/7_hi/q84_hi.wav", "/7_en/q84_en.wav"},
-  {"/7_hi/q85_hi.wav", "/7_en/q85_en.wav"},   {"/7_hi/q86_hi.wav", "/7_en/q86_en.wav"},
-  {"/7_hi/q87_hi.wav", "/7_en/q87_en.wav"},   {"/7_hi/q88_hi.wav", "/7_en/q88_en.wav"},
-  {"/7_hi/q89_hi.wav", "/7_en/q89_en.wav"},   {"/7_hi/q90_hi.wav", "/7_en/q90_en.wav"},
-  {"/7_hi/q91_hi.wav", "/7_en/q91_en.wav"},   {"/7_hi/q92_hi.wav", "/7_en/q92_en.wav"},
-  {"/7_hi/q93_hi.wav", "/7_en/q93_en.wav"},   {"/7_hi/q94_hi.wav", "/7_en/q94_en.wav"},
-  {"/7_hi/q95_hi.wav", "/7_en/q95_en.wav"},   {"/7_hi/q96_hi.wav", "/7_en/q96_en.wav"},
-  {"/7_hi/q97_hi.wav", "/7_en/q97_en.wav"},   {"/7_hi/q98_hi.wav", "/7_en/q98_en.wav"},
-  {"/7_hi/q99_hi.wav", "/7_en/q99_en.wav"},   {"/7_hi/q100_hi.wav", "/7_en/q100_en.wav"},
-  {"/7_hi/q101_hi.wav", "/7_en/q101_en.wav"}, {"/7_hi/q102_hi.wav", "/7_en/q102_en.wav"},
-  {"/7_hi/q103_hi.wav", "/7_en/q103_en.wav"}, {"/7_hi/q104_hi.wav", "/7_en/q104_en.wav"},
-  {"/7_hi/q105_hi.wav", "/7_en/q105_en.wav"}, {"/7_hi/q106_hi.wav", "/7_en/q106_en.wav"},
-  {"/7_hi/q107_hi.wav", "/7_en/q107_en.wav"}, {"/7_hi/q108_hi.wav", "/7_en/q108_en.wav"},
-  {"/7_hi/q109_hi.wav", "/7_en/q109_en.wav"}, {"/7_hi/q110_hi.wav", "/7_en/q110_en.wav"},
-  {"/7_hi/q111_hi.wav", "/7_en/q111_en.wav"}, {"/7_hi/q112_hi.wav", "/7_en/q112_en.wav"},
-  {"/7_hi/q113_hi.wav", "/7_en/q113_en.wav"}, {"/7_hi/q114_hi.wav", "/7_en/q114_en.wav"},
-  {"/7_hi/q115_hi.wav", "/7_en/q115_en.wav"}, {"/7_hi/q116_hi.wav", "/7_en/q116_en.wav"},
-  {"/7_hi/q117_hi.wav", "/7_en/q117_en.wav"}, {"/7_hi/q118_hi.wav", "/7_en/q118_en.wav"},
-  {"/7_hi/q119_hi.wav", "/7_en/q119_en.wav"}, {"/7_hi/q120_hi.wav", "/7_en/q120_en.wav"},
-  {"/7_hi/q121_hi.wav", "/7_en/q121_en.wav"}, {"/7_hi/q122_hi.wav", "/7_en/q122_en.wav"},
-  {"/7_hi/q123_hi.wav", "/7_en/q123_en.wav"}, {"/7_hi/q124_hi.wav", "/7_en/q124_en.wav"},
-  {"/7_hi/q125_hi.wav", "/7_en/q125_en.wav"}, {"/7_hi/q126_hi.wav", "/7_en/q126_en.wav"},
-  {"/7_hi/q127_hi.wav", "/7_en/q127_en.wav"}, {"/7_hi/q128_hi.wav", "/7_en/q128_en.wav"},
-  {"/7_hi/q129_hi.wav", "/7_en/q129_en.wav"},
-
-  // 5_hi and 5_en series (1 to 125)
-  {"/5_hi/q1_hi.wav", "/5_en/q1_en.wav"},     {"/5_hi/q2_hi.wav", "/5_en/q2_en.wav"},
-  {"/5_hi/q3_hi.wav", "/5_en/q3_en.wav"},     {"/5_hi/q4_hi.wav", "/5_en/q4_en.wav"},
-  {"/5_hi/q5_hi.wav", "/5_en/q5_en.wav"},     {"/5_hi/q6_hi.wav", "/5_en/q6_en.wav"},
-  {"/5_hi/q7_hi.wav", "/5_en/q7_en.wav"},     {"/5_hi/q8_hi.wav", "/5_en/q8_en.wav"},
-  {"/5_hi/q9_hi.wav", "/5_en/q9_en.wav"},     {"/5_hi/q10_hi.wav", "/5_en/q10_en.wav"},
-  {"/5_hi/q11_hi.wav", "/5_en/q11_en.wav"},   {"/5_hi/q12_hi.wav", "/5_en/q12_en.wav"},
-  {"/5_hi/q13_hi.wav", "/5_en/q13_en.wav"},   {"/5_hi/q14_hi.wav", "/5_en/q14_en.wav"},
-  {"/5_hi/q15_hi.wav", "/5_en/q15_en.wav"},   {"/5_hi/q16_hi.wav", "/5_en/q16_en.wav"},
-  {"/5_hi/q17_hi.wav", "/5_en/q17_en.wav"},   {"/5_hi/q18_hi.wav", "/5_en/q18_en.wav"},
-  {"/5_hi/q19_hi.wav", "/5_en/q19_en.wav"},   {"/5_hi/q20_hi.wav", "/5_en/q20_en.wav"},
-  {"/5_hi/q21_hi.wav", "/5_en/q21_en.wav"},   {"/5_hi/q22_hi.wav", "/5_en/q22_en.wav"},
-  {"/5_hi/q23_hi.wav", "/5_en/q23_en.wav"},   {"/5_hi/q24_hi.wav", "/5_en/q24_en.wav"},
-  {"/5_hi/q25_hi.wav", "/5_en/q25_en.wav"},   {"/5_hi/q26_hi.wav", "/5_en/q26_en.wav"},
-  {"/5_hi/q27_hi.wav", "/5_en/q27_en.wav"},   {"/5_hi/q28_hi.wav", "/5_en/q28_en.wav"},
-  {"/5_hi/q29_hi.wav", "/5_en/q29_en.wav"},   {"/5_hi/q30_hi.wav", "/5_en/q30_en.wav"},
-  {"/5_hi/q31_hi.wav", "/5_en/q31_en.wav"},   {"/5_hi/q32_hi.wav", "/5_en/q32_en.wav"},
-  {"/5_hi/q33_hi.wav", "/5_en/q33_en.wav"},   {"/5_hi/q34_hi.wav", "/5_en/q34_en.wav"},
-  {"/5_hi/q35_hi.wav", "/5_en/q35_en.wav"},   {"/5_hi/q36_hi.wav", "/5_en/q36_en.wav"},
-  {"/5_hi/q37_hi.wav", "/5_en/q37_en.wav"},   {"/5_hi/q38_hi.wav", "/5_en/q38_en.wav"},
-  {"/5_hi/q39_hi.wav", "/5_en/q39_en.wav"},   {"/5_hi/q40_hi.wav", "/5_en/q40_en.wav"},
-  {"/5_hi/q41_hi.wav", "/5_en/q41_en.wav"},   {"/5_hi/q42_hi.wav", "/5_en/q42_en.wav"},
-  {"/5_hi/q43_hi.wav", "/5_en/q43_en.wav"},   {"/5_hi/q44_hi.wav", "/5_en/q44_en.wav"},
-  {"/5_hi/q45_hi.wav", "/5_en/q45_en.wav"},   {"/5_hi/q46_hi.wav", "/5_en/q46_en.wav"},
-  {"/5_hi/q47_hi.wav", "/5_en/q47_en.wav"},   {"/5_hi/q48_hi.wav", "/5_en/q48_en.wav"},
-  {"/5_hi/q49_hi.wav", "/5_en/q49_en.wav"},   {"/5_hi/q50_hi.wav", "/5_en/q50_en.wav"},
-  {"/5_hi/q51_hi.wav", "/5_en/q51_en.wav"},   {"/5_hi/q52_hi.wav", "/5_en/q52_en.wav"},
-  {"/5_hi/q53_hi.wav", "/5_en/q53_en.wav"},   {"/5_hi/q54_hi.wav", "/5_en/q54_en.wav"},
-  {"/5_hi/q55_hi.wav", "/5_en/q55_en.wav"},   {"/5_hi/q56_hi.wav", "/5_en/q56_en.wav"},
-  {"/5_hi/q57_hi.wav", "/5_en/q57_en.wav"},   {"/5_hi/q58_hi.wav", "/5_en/q58_en.wav"},
-  {"/5_hi/q59_hi.wav", "/5_en/q59_en.wav"},   {"/5_hi/q60_hi.wav", "/5_en/q60_en.wav"},
-  {"/5_hi/q61_hi.wav", "/5_en/q61_en.wav"},   {"/5_hi/q62_hi.wav", "/5_en/q62_en.wav"},
-  {"/5_hi/q63_hi.wav", "/5_en/q63_en.wav"},   {"/5_hi/q64_hi.wav", "/5_en/q64_en.wav"},
-  {"/5_hi/q65_hi.wav", "/5_en/q65_en.wav"},   {"/5_hi/q66_hi.wav", "/5_en/q66_en.wav"},
-  {"/5_hi/q67_hi.wav", "/5_en/q67_en.wav"},   {"/5_hi/q68_hi.wav", "/5_en/q68_en.wav"},
-  {"/5_hi/q69_hi.wav", "/5_en/q69_en.wav"},   {"/5_hi/q70_hi.wav", "/5_en/q70_en.wav"},
-  {"/5_hi/q71_hi.wav", "/5_en/q71_en.wav"},   {"/5_hi/q72_hi.wav", "/5_en/q72_en.wav"},
-  {"/5_hi/q73_hi.wav", "/5_en/q73_en.wav"},   {"/5_hi/q74_hi.wav", "/5_en/q74_en.wav"},
-  {"/5_hi/q75_hi.wav", "/5_en/q75_en.wav"},   {"/5_hi/q76_hi.wav", "/5_en/q76_en.wav"},
-  {"/7_hi/q77_hi.wav", "/5_en/q77_en.wav"},   {"/5_hi/q78_hi.wav", "/5_en/q78_en.wav"},
-  {"/5_hi/q79_hi.wav", "/5_en/q79_en.wav"},   {"/5_hi/q80_hi.wav", "/5_en/q80_en.wav"},
-  {"/5_hi/q81_hi.wav", "/5_en/q81_en.wav"},   {"/5_hi/q82_hi.wav", "/5_en/q82_en.wav"},
-  {"/5_hi/q83_hi.wav", "/5_en/q83_en.wav"},   {"/5_hi/q84_hi.wav", "/5_en/q84_en.wav"},
-  {"/5_hi/q85_hi.wav", "/5_en/q85_en.wav"},   {"/5_hi/q86_hi.wav", "/5_en/q86_en.wav"},
-  {"/5_hi/q87_hi.wav", "/5_en/q87_en.wav"},   {"/5_hi/q88_hi.wav", "/5_en/q88_en.wav"},
-  {"/5_hi/q89_hi.wav", "/5_en/q89_en.wav"},   {"/5_hi/q90_hi.wav", "/5_en/q90_en.wav"},
-  {"/5_hi/q91_hi.wav", "/5_en/q91_en.wav"},   {"/5_hi/q92_hi.wav", "/5_en/q92_en.wav"},
-  {"/5_hi/q93_hi.wav", "/5_en/q93_en.wav"},   {"/5_hi/q94_hi.wav", "/5_en/q94_en.wav"},
-  {"/5_hi/q95_hi.wav", "/5_en/q95_en.wav"},   {"/5_hi/q96_hi.wav", "/5_en/q96_en.wav"},
-  {"/5_hi/q97_hi.wav", "/5_en/q97_en.wav"},   {"/5_hi/q98_hi.wav", "/5_en/q98_en.wav"},
-  {"/5_hi/q99_hi.wav", "/5_en/q99_en.wav"},   {"/5_hi/q100_hi.wav", "/5_en/q100_en.wav"},
-  {"/5_hi/q101_hi.wav", "/5_en/q101_en.wav"}, {"/5_hi/q102_hi.wav", "/5_en/q102_en.wav"},
-  {"/5_hi/q103_hi.wav", "/5_en/q103_en.wav"}, {"/5_hi/q104_hi.wav", "/5_en/q104_en.wav"},
-  {"/5_hi/q105_hi.wav", "/5_en/q105_en.wav"}, {"/5_hi/q106_hi.wav", "/5_en/q106_en.wav"},
-  {"/5_hi/q107_hi.wav", "/5_en/q107_en.wav"}, {"/5_hi/q108_hi.wav", "/5_en/q108_en.wav"},
-  {"/5_hi/q109_hi.wav", "/5_en/q109_en.wav"}, {"/5_hi/q110_hi.wav", "/5_en/q110_en.wav"},
-  {"/5_hi/q111_hi.wav", "/5_en/q111_en.wav"}, {"/5_hi/q112_hi.wav", "/5_en/q112_en.wav"},
-  {"/5_hi/q113_hi.wav", "/5_en/q113_en.wav"}, {"/5_hi/q114_hi.wav", "/5_en/q114_en.wav"},
-  {"/5_hi/q115_hi.wav", "/5_en/q115_en.wav"}, {"/5_hi/q116_hi.wav", "/5_en/q116_en.wav"},
-  {"/5_hi/q117_hi.wav", "/5_en/q117_en.wav"}, {"/5_hi/q118_hi.wav", "/5_en/q118_en.wav"},
-  {"/5_hi/q119_hi.wav", "/5_en/q119_en.wav"}, {"/5_hi/q120_hi.wav", "/5_en/q120_en.wav"},
-  {"/5_hi/q121_hi.wav", "/5_en/q121_en.wav"}, {"/5_hi/q122_hi.wav", "/5_en/q122_en.wav"},
-  {"/5_hi/q123_hi.wav", "/5_en/q123_en.wav"}, {"/5_hi/q124_hi.wav", "/5_en/q124_en.wav"},
-  {"/5_hi/q125_hi.wav", "/5_en/q125_en.wav"}
 };
-
-static_assert(QUESTION_BANK_SIZE == (sizeof(quizQuestions) / sizeof(quizQuestions[0])),
-              "Question and answer tables must stay aligned");
 
 String getQuizQuestionPath(int index) {
   if (index < 0 || index >= TOTAL_QUESTIONS) return String("");
@@ -652,7 +478,7 @@ bool          returnToQuizAfterScore = false;
 int    correctAnswersCount    = 0;
 int    wrongAnswersCount      = 0;
 int    totalQuestionsAnswered = 0;
-int currentQuestionIndex      = -1;
+int8_t currentQuestionIndex   = -1;
 bool   lastAnswerWasCorrect   = false;
 
 unsigned long lastAnswerTime  = 0;
@@ -1398,7 +1224,7 @@ void continueScoreAnnouncement() {
 // =====================================================
 void playInstructions() {
   bool    wasInQuiz  = quizMode;
-  int     savedIdx   = currentQuestionIndex;
+  int8_t  savedIdx   = currentQuestionIndex;
   safeCloseFile(audioFile);
   streamPaused = localPaused = true;
   resetAnswerLEDs();
