@@ -386,8 +386,10 @@ const std::vector<int8_t> correctAnswers[341] = {
   {31,29,35},{33,32},{29,28},{35,34},{31,33}                                    
 };
 
-const uint8_t TOTAL_QUESTIONS = 341;
-bool questionsAsked[341]  = {false};
+constexpr int QUESTION_BANK_SIZE = sizeof(correctAnswers) / sizeof(correctAnswers[0]);
+constexpr int TOTAL_QUESTIONS = 87;
+static_assert(TOTAL_QUESTIONS <= QUESTION_BANK_SIZE, "TOTAL_QUESTIONS exceeds answer key size");
+bool questionsAsked[QUESTION_BANK_SIZE] = {false};
 int  totalQuestionsAsked = 0;
 
 // =====================================================
@@ -572,6 +574,9 @@ const char* const quizQuestions[341][SYS_LANG_COUNT] = {
   {"/5_hi/q125_hi.wav", "/5_en/q125_en.wav"}
 };
 
+static_assert(QUESTION_BANK_SIZE == (sizeof(quizQuestions) / sizeof(quizQuestions[0])),
+              "Question and answer tables must stay aligned");
+
 String getQuizQuestionPath(int index) {
   if (index < 0 || index >= TOTAL_QUESTIONS) return String("");
   return getLocalizedAudio(quizQuestions[index]);
@@ -647,7 +652,7 @@ bool          returnToQuizAfterScore = false;
 int    correctAnswersCount    = 0;
 int    wrongAnswersCount      = 0;
 int    totalQuestionsAnswered = 0;
-int8_t currentQuestionIndex   = -1;
+int currentQuestionIndex      = -1;
 bool   lastAnswerWasCorrect   = false;
 
 unsigned long lastAnswerTime  = 0;
@@ -1393,7 +1398,7 @@ void continueScoreAnnouncement() {
 // =====================================================
 void playInstructions() {
   bool    wasInQuiz  = quizMode;
-  int8_t  savedIdx   = currentQuestionIndex;
+  int     savedIdx   = currentQuestionIndex;
   safeCloseFile(audioFile);
   streamPaused = localPaused = true;
   resetAnswerLEDs();
