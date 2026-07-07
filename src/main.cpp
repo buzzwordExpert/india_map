@@ -228,7 +228,7 @@ const char* const rfidQuizModeAudioPaths[SYS_LANG_COUNT] = { "/Hindi/rfid_hindi_
 const char* const switchPlayModeAudioPaths[SYS_LANG_COUNT] = { "/Hindi/switch_play_mode.wav", "/English/switch_play_mode.wav" };
 const char* const switchQuizModeAudioPaths[SYS_LANG_COUNT] = { "/Hindi/switch_quiz_mode.wav", "/English/switch_quiz_mode.wav" };
 const char* const welcomeAudioPaths[SYS_LANG_COUNT] = { "/Hindi/welcome.wav", "/English/welcome.wav" };
-const char* const speakerSetupAudioPaths[SYS_LANG_COUNT] = { "/Hindi/speaker_hi", "/English/speaker_eng" };
+const char* const speakerSetupAudioPaths[SYS_LANG_COUNT] = { "/Hindi/speaker_hi.wav", "/English/speaker_eng.wav" };
 const char* const mlSwitchQuizAudioPaths[SYS_LANG_COUNT] = { "/Hindi/mlswitch_hindi.wav", "/English/switch_quiz_mode.wav" };
 const char* const mlRfidQuizAudioPaths[SYS_LANG_COUNT] = { "/Hindi/rfid_quiz_mode_hindi.wav", "/English/rfid_quiz_mode.wav" };
 const char* const resetAudioPaths[SYS_LANG_COUNT] = { "/Hindi/reset_h.wav", "/English/reset.wav" };
@@ -717,7 +717,6 @@ void runSpeakerSetupPortal() {
   setupServer.onNotFound(handleSetupNotFound);
   setupServer.begin();
   Serial.println("Open WiFi AP started: Bharat-Setup");
-  openAndStartAudio(getLocalizedAudio(speakerSetupAudioPaths), true);
   while (!setupPortalSaved) {
     setupDns.processNextRequest();
     setupServer.handleClient();
@@ -730,11 +729,10 @@ void runSpeakerSetupPortal() {
   ESP.restart();
 }
 void deleteSpeakerConfigAndRestart() {
-  safeCloseFile(audioFile);
   streamPaused = localPaused = true;
   deleteTextFile(SPEAKER_CONFIG_FILE);
   Serial.println("speaker.txt deleted. Restarting into setup portal...");
-  delay(1000);
+  delay(200);
   ESP.restart();
 }
 
@@ -1573,7 +1571,10 @@ void vTaskWriteLEDs(void *pvParameters) {
       if (millis() - resetButtonPressTime >= BOSS_HOLD_TIME) {
         resetHoldFired = true;
         resetButtonHeld = false;
-        flashResetLEDs();
+        flashResetLEDs();      
+        safeCloseFile(audioFile);
+        openAndStartAudio(getLocalizedAudio(speakerSetupAudioPaths), true);
+        delay(4000);
         deleteSpeakerConfigAndRestart();
       }
     }
