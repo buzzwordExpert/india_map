@@ -240,88 +240,25 @@ const char* correctWordAudio = "/correctword.wav";
 // =====================================================
 // NUMBER AUDIO
 // =====================================================
-const char* numberAudioFiles[401] = {
-    "/Hindi/n0.wav", "/Hindi/1.wav", "/Hindi/2.wav", "/Hindi/3.wav", "/Hindi/4.wav",
-    "/Hindi/5.wav", "/Hindi/6.wav", "/Hindi/7.wav", "/Hindi/8.wav", "/Hindi/9.wav",
-    "/Hindi/10.wav", "/Hindi/11.wav", "/Hindi/12.wav", "/Hindi/13.wav", "/Hindi/14.wav",
-    "/Hindi/15.wav", "/Hindi/16.wav", "/Hindi/17.wav", "/Hindi/18.wav", "/Hindi/19.wav",
-    "/Hindi/20.wav", "/Hindi/21.wav", "/Hindi/22.wav", "/Hindi/23.wav", "/Hindi/24.wav",
-    "/Hindi/25.wav", "/Hindi/26.wav", "/Hindi/27.wav", "/Hindi/28.wav", "/Hindi/29.wav",
-    "/Hindi/30.wav", "/Hindi/31.wav", "/Hindi/32.wav", "/Hindi/33.wav", "/Hindi/34.wav",
-    "/Hindi/35.wav", "/Hindi/36.wav", "/Hindi/37.wav", "/Hindi/38.wav", "/Hindi/39.wav",
-    "/Hindi/40.wav", "/Hindi/41.wav", "/Hindi/42.wav", "/Hindi/43.wav", "/Hindi/44.wav",
-    "/Hindi/45.wav", "/Hindi/46.wav", "/Hindi/47.wav", "/Hindi/48.wav", "/Hindi/49.wav",
-    "/Hindi/50.wav", "/Hindi/51.wav", "/Hindi/52.wav", "/Hindi/53.wav", "/Hindi/54.wav",
-    "/Hindi/55.wav", "/Hindi/56.wav", "/Hindi/57.wav", "/Hindi/58.wav", "/Hindi/59.wav",
-    "/Hindi/60.wav", "/Hindi/61.wav", "/Hindi/62.wav", "/Hindi/63.wav", "/Hindi/64.wav",
-    "/Hindi/65.wav", "/Hindi/66.wav", "/Hindi/67.wav", "/Hindi/68.wav", "/Hindi/69.wav",
-    "/Hindi/70.wav", "/Hindi/71.wav", "/Hindi/72.wav", "/Hindi/73.wav", "/Hindi/74.wav",
-    "/Hindi/75.wav", "/Hindi/76.wav", "/Hindi/77.wav", "/Hindi/78.wav", "/Hindi/79.wav",
-    "/Hindi/80.wav", "/Hindi/81.wav", "/Hindi/82.wav", "/Hindi/83.wav", "/Hindi/84.wav",
-    "/Hindi/85.wav", "/Hindi/86.wav", "/Hindi/87.wav", "/Hindi/88.wav", "/Hindi/89.wav",
-    "/Hindi/90.wav", "/Hindi/91.wav", "/Hindi/92.wav", "/Hindi/93.wav", "/Hindi/94.wav",
-    "/Hindi/95.wav", "/Hindi/96.wav", "/Hindi/97.wav", "/Hindi/98.wav", "/Hindi/99.wav",
-    "/Hindi/100.wav", "/Hindi/101.wav", "/Hindi/102.wav", "/Hindi/103.wav", "/Hindi/104.wav",
-    "/Hindi/105.wav", "/Hindi/106.wav", "/Hindi/107.wav", "/Hindi/108.wav", "/Hindi/109.wav",
-    "/Hindi/110.wav", "/Hindi/111.wav", "/Hindi/112.wav", "/Hindi/113.wav", "/Hindi/114.wav",
-    "/Hindi/115.wav", "/Hindi/116.wav", "/Hindi/117.wav", "/Hindi/118.wav", "/Hindi/119.wav",
-    "/Hindi/120.wav", "/Hindi/121.wav", "/Hindi/122.wav", "/Hindi/123.wav", "/Hindi/124.wav",
-    "/Hindi/125.wav", "/Hindi/126.wav", "/Hindi/127.wav", "/Hindi/128.wav", "/Hindi/129.wav",
-    "/Hindi/130.wav", "/Hindi/131.wav", "/Hindi/132.wav", "/Hindi/133.wav", "/Hindi/134.wav",
-    "/Hindi/135.wav", "/Hindi/136.wav", "/Hindi/137.wav", "/Hindi/138.wav", "/Hindi/139.wav",
-    "/Hindi/140.wav", "/Hindi/141.wav", "/Hindi/142.wav", "/Hindi/143.wav", "/Hindi/144.wav",
-    "/Hindi/145.wav", "/Hindi/146.wav", "/Hindi/147.wav", "/Hindi/148.wav", "/Hindi/149.wav",
-    "/Hindi/150.wav", "/Hindi/151.wav", "/Hindi/152.wav", "/Hindi/153.wav", "/Hindi/154.wav",
-    "/Hindi/155.wav", "/Hindi/156.wav", "/Hindi/157.wav", "/Hindi/158.wav", "/Hindi/159.wav",
-    "/Hindi/160.wav", "/Hindi/161.wav", "/Hindi/162.wav", "/Hindi/163.wav", "/Hindi/164.wav",
-    "/Hindi/165.wav", "/Hindi/166.wav", "/Hindi/167.wav", "/Hindi/168.wav", "/Hindi/169.wav",
-    "/Hindi/170.wav", "/Hindi/171.wav", "/Hindi/172.wav", "/Hindi/173.wav", "/Hindi/174.wav",
-    "/Hindi/175.wav", "/Hindi/176.wav", "/Hindi/177.wav", "/Hindi/178.wav", "/Hindi/179.wav",
-    "/Hindi/180.wav", "/Hindi/181.wav", "/Hindi/182.wav", "/Hindi/183.wav", "/Hindi/184.wav",
-    "/Hindi/185.wav", "/Hindi/186.wav", "/Hindi/187.wav", "/Hindi/188.wav", "/Hindi/189.wav",
-    "/Hindi/190.wav", "/Hindi/191.wav", "/Hindi/192.wav", "/Hindi/193.wav", "/Hindi/194.wav",
-    "/Hindi/195.wav", "/Hindi/196.wav", "/Hindi/197.wav", "/Hindi/198.wav", "/Hindi/199.wav",
-    "/Hindi/200.wav", "/Hindi/201.wav", "/Hindi/202.wav", "/Hindi/203.wav", "/Hindi/204.wav",
-    "/Hindi/205.wav", "/Hindi/206.wav", "/Hindi/207.wav", "/Hindi/208.wav", "/Hindi/209.wav",
-    "/Hindi/210.wav", "/Hindi/211.wav", "/Hindi/212.wav", "/Hindi/213.wav", "/Hindi/214.wav",
-    "/Hindi/215.wav", "/Hindi/216.wav", "/Hindi/217.wav", "/Hindi/218.wav", "/Hindi/219.wav",
-    "/Hindi/220.wav", "/Hindi/221.wav", "/Hindi/222.wav", "/Hindi/223.wav", "/Hindi/224.wav",
-    "/Hindi/225.wav", "/Hindi/226.wav", "/Hindi/227.wav", "/Hindi/228.wav", "/Hindi/229.wav",
-    "/Hindi/230.wav", "/Hindi/231.wav", "/Hindi/232.wav", "/Hindi/233.wav", "/Hindi/234.wav",
-    "/Hindi/235.wav", "/Hindi/236.wav", "/Hindi/237.wav", "/Hindi/238.wav", "/Hindi/239.wav",
-    "/Hindi/240.wav", "/Hindi/241.wav", "/Hindi/242.wav", "/Hindi/243.wav", "/Hindi/244.wav",
-    "/Hindi/245.wav", "/Hindi/246.wav", "/Hindi/247.wav", "/Hindi/248.wav", "/Hindi/249.wav",
-    "/Hindi/250.wav", "/Hindi/251.wav", "/Hindi/252.wav", "/Hindi/253.wav", "/Hindi/254.wav",
-    "/Hindi/255.wav", "/Hindi/256.wav", "/Hindi/257.wav", "/Hindi/258.wav", "/Hindi/259.wav",
-    "/Hindi/260.wav", "/Hindi/261.wav", "/Hindi/262.wav", "/Hindi/263.wav", "/Hindi/264.wav",
-    "/Hindi/265.wav", "/Hindi/266.wav", "/Hindi/267.wav", "/Hindi/268.wav", "/Hindi/269.wav",
-    "/Hindi/270.wav", "/Hindi/271.wav", "/Hindi/272.wav", "/Hindi/273.wav", "/Hindi/274.wav",
-    "/Hindi/275.wav", "/Hindi/276.wav", "/Hindi/277.wav", "/Hindi/278.wav", "/Hindi/279.wav",
-    "/Hindi/280.wav", "/Hindi/281.wav", "/Hindi/282.wav", "/Hindi/283.wav", "/Hindi/284.wav",
-    "/Hindi/285.wav", "/Hindi/286.wav", "/Hindi/287.wav", "/Hindi/288.wav", "/Hindi/289.wav",
-    "/Hindi/290.wav", "/Hindi/291.wav", "/Hindi/292.wav", "/Hindi/293.wav", "/Hindi/294.wav",
-    "/Hindi/295.wav", "/Hindi/296.wav", "/Hindi/297.wav", "/Hindi/298.wav", "/Hindi/299.wav",
-    "/Hindi/300.wav", "/Hindi/301.wav", "/Hindi/302.wav", "/Hindi/303.wav", "/Hindi/304.wav",
-    "/Hindi/305.wav", "/Hindi/306.wav", "/Hindi/307.wav", "/Hindi/308.wav", "/Hindi/309.wav",
-    "/Hindi/310.wav", "/Hindi/311.wav", "/Hindi/312.wav", "/Hindi/313.wav", "/Hindi/314.wav",
-    "/Hindi/315.wav", "/Hindi/316.wav", "/Hindi/317.wav", "/Hindi/318.wav", "/Hindi/319.wav",
-    "/Hindi/320.wav", "/Hindi/321.wav", "/Hindi/322.wav", "/Hindi/323.wav", "/Hindi/324.wav",
-    "/Hindi/325.wav", "/Hindi/326.wav", "/Hindi/327.wav", "/Hindi/328.wav", "/Hindi/329.wav",
-    "/Hindi/330.wav", "/Hindi/331.wav", "/Hindi/332.wav", "/Hindi/333.wav", "/Hindi/334.wav",
-    "/Hindi/335.wav", "/Hindi/336.wav", "/Hindi/337.wav", "/Hindi/338.wav", "/Hindi/339.wav",
-    "/Hindi/340.wav", "/Hindi/341.wav", "/Hindi/342.wav", "/Hindi/343.wav", "/Hindi/344.wav",
-    "/Hindi/345.wav", "/Hindi/346.wav", "/Hindi/347.wav", "/Hindi/348.wav", "/Hindi/349.wav",
-    "/Hindi/350.wav", "/Hindi/351.wav", "/Hindi/352.wav", "/Hindi/353.wav", "/Hindi/354.wav",
-    "/Hindi/355.wav", "/Hindi/356.wav", "/Hindi/357.wav", "/Hindi/358.wav", "/Hindi/359.wav",
-    "/Hindi/360.wav", "/Hindi/361.wav", "/Hindi/362.wav", "/Hindi/363.wav", "/Hindi/364.wav",
-    "/Hindi/365.wav", "/Hindi/366.wav", "/Hindi/367.wav", "/Hindi/368.wav", "/Hindi/369.wav",
-    "/Hindi/370.wav", "/Hindi/371.wav", "/Hindi/372.wav", "/Hindi/373.wav", "/Hindi/374.wav",
-    "/Hindi/375.wav", "/Hindi/376.wav", "/Hindi/377.wav", "/Hindi/378.wav", "/Hindi/379.wav",
-    "/Hindi/380.wav", "/Hindi/381.wav", "/Hindi/382.wav", "/Hindi/383.wav", "/Hindi/384.wav",
-    "/Hindi/385.wav", "/Hindi/386.wav", "/Hindi/387.wav", "/Hindi/388.wav", "/Hindi/389.wav",
-    "/Hindi/390.wav", "/Hindi/391.wav", "/Hindi/392.wav", "/Hindi/393.wav", "/Hindi/394.wav",
-    "/Hindi/395.wav", "/Hindi/396.wav", "/Hindi/397.wav", "/Hindi/398.wav", "/Hindi/399.wav",
-    "/Hindi/400.wav"
+const char* numberAudioFiles[88] = {
+    "/Hindi/n0.wave", "/Hindi/n1.wave", "/Hindi/n2.wave", "/Hindi/n3.wave", "/Hindi/n4.wave",
+    "/Hindi/n5.wave", "/Hindi/n6.wave", "/Hindi/n7.wave", "/Hindi/n8.wave", "/Hindi/n9.wave",
+    "/Hindi/n10.wave", "/Hindi/n11.wave", "/Hindi/n12.wave", "/Hindi/n13.wave", "/Hindi/n14.wave",
+    "/Hindi/n15.wave", "/Hindi/n16.wave", "/Hindi/n17.wave", "/Hindi/n18.wave", "/Hindi/n19.wave",
+    "/Hindi/n20.wave", "/Hindi/n21.wave", "/Hindi/n22.wave", "/Hindi/n23.wave", "/Hindi/n24.wave",
+    "/Hindi/n25.wave", "/Hindi/n26.wave", "/Hindi/n27.wave", "/Hindi/n28.wave", "/Hindi/n29.wave",
+    "/Hindi/n30.wave", "/Hindi/n31.wave", "/Hindi/n32.wave", "/Hindi/n33.wave", "/Hindi/n34.wave",
+    "/Hindi/n35.wave", "/Hindi/n36.wave", "/Hindi/n37.wave", "/Hindi/n38.wave", "/Hindi/n39.wave",
+    "/Hindi/n40.wave", "/Hindi/n41.wave", "/Hindi/n42.wave", "/Hindi/n43.wave", "/Hindi/n44.wave",
+    "/Hindi/n45.wave", "/Hindi/n46.wave", "/Hindi/n47.wave", "/Hindi/n48.wave", "/Hindi/n49.wave",
+    "/Hindi/n50.wave", "/Hindi/n51.wave", "/Hindi/n52.wave", "/Hindi/n53.wave", "/Hindi/n54.wave",
+    "/Hindi/n55.wave", "/Hindi/n56.wave", "/Hindi/n57.wave", "/Hindi/n58.wave", "/Hindi/n59.wave",
+    "/Hindi/n60.wave", "/Hindi/n61.wave", "/Hindi/n62.wave", "/Hindi/n63.wave", "/Hindi/n64.wave",
+    "/Hindi/n65.wave", "/Hindi/n66.wave", "/Hindi/n67.wave", "/Hindi/n68.wave", "/Hindi/n69.wave",
+    "/Hindi/n70.wave", "/Hindi/n71.wave", "/Hindi/n72.wave", "/Hindi/n73.wave", "/Hindi/n74.wave",
+    "/Hindi/n75.wave", "/Hindi/n76.wave", "/Hindi/n77.wave", "/Hindi/n78.wave", "/Hindi/n79.wave",
+    "/Hindi/n80.wave", "/Hindi/n81.wave", "/Hindi/n82.wave", "/Hindi/n83.wave", "/Hindi/n84.wave",
+    "/Hindi/n85.wave", "/Hindi/n86.wave", "/Hindi/n87.wave",
 };
 
 String getNumberAudioPath(int n) {
@@ -1008,7 +945,10 @@ void resetBoard() {
   Serial.println("\n=== BOARD RESET ===");
   safeCloseFile(audioFile);
   streamPaused = localPaused = true;
+  currentLanguage      = SYS_LANG_HINDI;
   quizMode             = false;
+  rfidMode             = false;
+  disableRFID();
   quizState            = QUIZ_IDLE;
   currentQuestionIndex = -1;
   currentTrackIndex    = -1;
@@ -1026,7 +966,7 @@ void resetBoard() {
   write595_all(ledState);
   flashResetLEDs();
   resetAnswerLEDs();
-  openAndStartAudio(getLocalizedAudio(resetAudioPaths), true);
+  openAndStartAudio(String(switchPlayModeAudioPaths[SYS_LANG_HINDI]), true);
 }
 
 // =====================================================
