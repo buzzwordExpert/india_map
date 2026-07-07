@@ -231,6 +231,10 @@ const char* const welcomeAudioPaths[SYS_LANG_COUNT] = { "/Hindi/welcome.wav", "/
 const char* const speakerSetupAudioPaths[SYS_LANG_COUNT] = { "/Hindi/speaker_hi.wav", "/English/speaker_eng.wav" };
 const char* const mlSwitchQuizAudioPaths[SYS_LANG_COUNT] = { "/Hindi/mlswitch_hindi.wav", "/English/switch_quiz_mode.wav" };
 const char* const mlRfidQuizAudioPaths[SYS_LANG_COUNT] = { "/Hindi/rfid_quiz_mode_hindi.wav", "/English/rfid_quiz_mode.wav" };
+
+// PLACEHOLDER 
+const char* const mlSwitchQuizFifthAudioPaths[SYS_LANG_COUNT] = { "/Hindi/quiz_mode_fifth_hi.wav", "/English/quiz_mode_fifth_en.wav" };
+const char* const mlRfidQuizFifthAudioPaths[SYS_LANG_COUNT]   = { "/Hindi/rfid_quiz_mode_fifth_hi.wav",   "/English/rfid_quiz_mode_fifth_en.wav" };
 const char* const resetAudioPaths[SYS_LANG_COUNT] = { "/Hindi/reset_h.wav", "/English/reset.wav" };
 const char* const languageChangedAudioPaths[SYS_LANG_COUNT] = { "/Hindi/Hindi_lan.wav", "/English/English_lan.wav" };
 const char* const scoreIntroAudioPaths[SYS_LANG_COUNT] = { "/Hindi/final_score_hindi.wav", "/English/final_score_hindi.wav" };
@@ -495,8 +499,11 @@ volatile unsigned long pendingActionAt   = 0;
 volatile int8_t        pendingCorrectIdx = -1;
 
 String getModeAnnouncement() {
-  if (quizMode)
+  if (quizMode) {
+    if (quizModeFifth)
+      return getLocalizedAudio(rfidMode ? mlRfidQuizFifthAudioPaths : mlSwitchQuizFifthAudioPaths);
     return getLocalizedAudio(rfidMode ? mlRfidQuizAudioPaths : mlSwitchQuizAudioPaths);
+  }
   return getLocalizedAudio(rfidMode ? rfidPlayModeAudioPaths : switchPlayModeAudioPaths);
 }
 
