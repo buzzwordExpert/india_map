@@ -1174,29 +1174,39 @@ void continueScoreAnnouncement() {
   if (!playingScore || scoreSequence == SEQ_NONE) return;
   safeCloseFile(audioFile);
   streamPaused = localPaused = true;
+  const bool reverseScoreNumbers = (currentLanguage == SYS_LANG_HINDI);
   switch (scoreSequence) {
     case SEQ_SCORE_INTRO: {
       if (openAndStartAudio(getLocalizedAudio(scoreIntroAudioPaths)))
-        scoreSequence = SEQ_CORRECT_NUMBER;
-      else { scoreSequence = SEQ_CORRECT_NUMBER; continueScoreAnnouncement(); }
+        scoreSequence = reverseScoreNumbers ? SEQ_TOTAL_NUMBER : SEQ_CORRECT_NUMBER;
+      else {
+        scoreSequence = reverseScoreNumbers ? SEQ_TOTAL_NUMBER : SEQ_CORRECT_NUMBER;
+        continueScoreAnnouncement();
+      }
       break;
     }
     case SEQ_CORRECT_NUMBER: {
       String f = getNumberAudioPath(correctAnswersCount);
-      if (f.length() && openAndStartAudio(f)) scoreSequence = SEQ_OUT_OF;
+      if (f.length() && openAndStartAudio(f)) scoreSequence = reverseScoreNumbers ? SEQ_CORRECT_WORD : SEQ_OUT_OF;
       else { scoreSequence = SEQ_DONE; continueScoreAnnouncement(); }
       break;
     }
     case SEQ_OUT_OF: {
       if (openAndStartAudio(getLocalizedAudio(outOfAudioPaths)))
-        scoreSequence = SEQ_TOTAL_NUMBER;
-      else { scoreSequence = SEQ_TOTAL_NUMBER; continueScoreAnnouncement(); }
+        scoreSequence = reverseScoreNumbers ? SEQ_CORRECT_NUMBER : SEQ_TOTAL_NUMBER;
+      else {
+        scoreSequence = reverseScoreNumbers ? SEQ_CORRECT_NUMBER : SEQ_TOTAL_NUMBER;
+        continueScoreAnnouncement();
+      }
       break;
     }
     case SEQ_TOTAL_NUMBER: {
       String f = getNumberAudioPath(totalQuestionsAnswered);
-      if (f.length() && openAndStartAudio(f)) scoreSequence = SEQ_CORRECT_WORD;
-      else { scoreSequence = SEQ_CORRECT_WORD; continueScoreAnnouncement(); }
+      if (f.length() && openAndStartAudio(f)) scoreSequence = reverseScoreNumbers ? SEQ_OUT_OF : SEQ_CORRECT_WORD;
+      else {
+        scoreSequence = reverseScoreNumbers ? SEQ_OUT_OF : SEQ_CORRECT_WORD;
+        continueScoreAnnouncement();
+      }
       break;
     }
     case SEQ_CORRECT_WORD: {
@@ -1635,7 +1645,7 @@ void setup() {
   Serial.begin(115200);
   delay(1000);
   Serial.println("================================================");
-  Serial.println("   BHARAT QUIZ BOARD  —  HINDI + ENGLISH  v3.2  ");
+  Serial.println("   BHARAT QUIZ BOARD  —  HINDI + ENGLISH        ");
   Serial.println("================================================");
 
   randomSeed(esp_random());
