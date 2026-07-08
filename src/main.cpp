@@ -240,7 +240,7 @@ const char* const mlRfidQuizSeventhAudioPaths[SYS_LANG_COUNT]   = { "/Hindi/rfid
 const char* const classSelectPromptAudioPaths[SYS_LANG_COUNT] = { "/Hindi/class_select_prompt_hi.wav", "/English/class_select_prompt_en.wav" };
 const char* const resetAudioPaths[SYS_LANG_COUNT] = { "/Hindi/reset_h.wav", "/English/reset.wav" };
 const char* const languageChangedAudioPaths[SYS_LANG_COUNT] = { "/Hindi/Hindi_lan.wav", "/English/English_lan.wav" };
-const char* const scoreIntroAudioPaths[SYS_LANG_COUNT] = { "/Hindi/final_score_hindi.wav", "/English/final_score_hindi.wav" };
+const char* const scoreIntroAudioPaths[SYS_LANG_COUNT] = { "/Hindi/final_score_hindi.wav", "/English/final_score.wav" };
 const char* const outOfAudioPaths[SYS_LANG_COUNT] = { "/Hindi/outof_hindi.wav", "/English/outof.wav" };
 
 const char* correctWordAudio = "/correctword.wav";
@@ -299,53 +299,57 @@ const std::vector<int8_t> correctAnswers[87] =
 
 const std::vector<int8_t> correctAnswersFifth[125] = 
 {
-  {10},   {5},    {6},    {25},   {20},   {19},   {19},   {21},   {27},   {1},  
-  {6},    {19},   {10},   {1},    {23},   {27},   {25},   {22},   {10},   {25}, 
-  {27},   {25},   {20},   {18},   {1},    {21},   {21},   {25},   {27},   {5},  
-  {11},   {1},    {19},   {18},   {19},   {1},    {10},   {19},   {11},   {6},  
-  {14},   {20},   {6},    {25},   {20},   {6},    {10},   {0},    {11},   {7},  
-  {22},   {29},   {25},   {5},    {27},   {19},   {1},    {27},   {25},   {6},  
-  {19},   {25},   {21},   {1},    {6},    {5},    {19},   {19},   {18},   {26}, 
-  {27},   {6,25}, {25,21,18,6},{5,7,0},{11,20,23,27},{27,26,25,11,20,18,6},{6,4,29},{27,26,23,20,14,0},{10,26,27},{25,10,11}, 
-  {1,19}, {15,8,13,10},{27,25,22},{10,11},{21,18},{31},  {33},   {35},   {34},   {31}, 
-  {33},   {33},   {32},   {28},   {32},   {29},   {28},   {29},   {28},   {28}, 
-  {32},   {33},   {33},   {28},   {28},   {28},   {28},   {31},   {33},   {35}, 
-  {33,32,35,34,29},{35,34},{29,28},{33,32},{28,29},{33}, {28},   {28},   {33},   {29}, 
-  {31,29,35},{33,32},{29,28},{35,34},{31,33}
+  {2}, {5}, {6}, {25}, {20}, {19}, {19}, {21}, {27}, {1}, // Q1 - Q10
+  {6}, {19}, {10}, {1}, {23}, {27}, {25}, {22}, {2}, {25}, // Q11 - Q20
+  {27}, {25}, {20}, {18}, {1}, {21}, {21}, {25}, {27}, {5}, // Q21 - Q30
+  {11}, {1}, {19}, {18}, {19}, {1}, {10}, {19}, {11}, {6}, // Q31 - Q40
+  {14}, {20}, {6}, {25}, {20}, {6}, {10}, {0}, {11}, {7}, // Q41 - Q50
+  {22}, {29}, {25}, {5}, {27}, {19}, {1}, {27}, {25}, {6}, // Q51 - Q60
+  {19}, {25}, {21}, {1}, {6}, {5}, {19}, {19}, {18}, {26}, // Q61 - Q70
+  {27}, {6, 25}, {25, 21, 18, 6}, {5, 7, 0}, {11, 20, 23, 27}, // Q71 - Q75
+  {27, 26, 25, 11, 20, 18, 6}, {6, 4, 29}, {27, 26, 23, 20, 14, 0}, {10, 26, 27}, {25, 10, 11}, // Q76 - Q80
+  {1, 19}, {15, 8, 13, 10}, {27, 25, 22}, {10, 11}, {21, 18}, // Q81 - Q85
+  {31}, {33}, {35}, {34}, {31}, // Q86 - Q90
+  {33}, {33}, {32}, {28}, {32}, // Q91 - Q95
+  {29}, {28}, {29}, {28}, {28}, // Q96 - Q100
+  {32}, {33}, {33}, {28}, {28}, // Q101 - Q105
+  {28}, {28}, {31}, {33}, {35}, // Q106 - Q110
+  {33, 32, 35, 34, 29}, {35, 34}, {29, 28}, {33, 32}, {28, 29}, // Q111 - Q115
+  {33}, {28}, {28}, {33}, {29}, // Q116 - Q120
+  {31, 29, 35}, {33, 32}, {29, 28}, {35, 34}, {31, 33} // Q121 - Q125
 };
 
-const std::vector<int8_t> correctAnswersSixth[125] =
+const std::vector<int8_t> correctAnswersSixth[99] =
 {
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0},
+  {6, 0, 2, 16, 11}, {6, 7, 31, 0}, {18, 21, 19}, {21, 22, 23}, {21, 25, 22, 23}, {25, 27}, {12, 10}, {19, 21, 24, 25, 26}, {11, 20, 23, 27}, {29, 4, 6, 3, 12}, // Q1 - Q10
+  {19, 7, 5, 1}, {19}, {19, 5, 7}, {5, 19}, {19, 7, 5, 1}, {0, 2, 18, 5, 7}, {2}, {0}, {18}, {7}, // Q11 - Q20
+  {19, 20, 25, 23, 31}, {18, 0, 2}, {2, 0, 18, 20}, {2}, {19}, {11}, {6}, {19}, {2}, {10}, // Q21 - Q30
+  {19, 21, 18, 22}, {19, 21, 24, 25, 26, 27}, {19}, {19}, {7}, {1}, {7}, {2}, {0}, {18}, // Q31 - Q40
+  {2}, {0}, {2}, {18}, {2}, {2}, {0}, {19}, {6}, {2}, // Q41 - Q50
+  {10}, {19}, {1}, {6}, {20}, {26}, {21}, {11}, {7}, {19}, // Q51 - Q60
+  {23}, {21}, {22}, {8}, {26}, {1}, {18}, {14}, {14}, {10}, // Q61 - Q70
+  {33}, {11}, {18}, {25}, {2}, {26}, // Q71 - Q76 (Q77 skipped)
+  {32}, {35}, {33}, {33}, {28}, {33}, {32}, {28}, {35}, {29}, // Q78 - Q87
+  {34}, {28}, {29}, {33}, {28}, {32}, {28}, {32}, {31}, {32}, // Q88 - Q97
+  {31, 28, 32, 33}, {31, 35, 28}, {28, 33, 35, 31} // Q98 - Q100
 };
 
-const std::vector<int8_t> correctAnswersSeventh[125] =
+const std::vector<int8_t> correctAnswersSeventh[129] =
 {
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
-  {0}, {0}, {0}, {0}, {0},
+  {5}, {26}, {1}, {1}, {10}, {11}, {21}, {0}, {0}, {27}, // Q1 - Q10
+  {27}, {22}, {25}, {25}, {25}, {20}, {20}, {20}, {19}, {19}, // Q11 - Q20
+  {4}, {4}, {29}, {29}, {18}, {18}, {2}, {2}, {17}, {16}, // Q21 - Q30
+  {16}, {15}, {14}, {8}, {26}, {11}, {14}, {26}, {23}, {23}, // Q31 - Q40
+  {13}, {3}, {14}, {26}, {12}, {8}, {12}, {24}, {24}, {6}, // Q41 - Q50
+  {25}, {6}, {6}, {21}, {33}, {5}, {5}, {2}, {27}, {25}, // Q51 - Q60
+  {1}, {20}, {2}, {19}, {19}, {5}, {5}, {11}, {19}, {0}, // Q61 - Q70
+  {7}, {7}, {7}, {7}, {7}, {6}, {5, 7}, {10, 11}, {25, 26, 27}, {19, 1, 18, 17, 16, 11, 8, 15}, // Q71 - Q80
+  {1, 19}, {19, 21, 24, 25, 26}, {25, 10, 11}, {15, 8, 13}, {10, 11}, {5, 7, 0}, {19, 21, 22}, {11, 10, 2}, {21, 19, 18}, {27, 25, 23, 20}, // Q81 - Q90
+  {26, 25, 24, 27}, {28}, {32}, {31}, {30}, {28}, {33}, {35}, {31}, {34}, // Q91 - Q100
+  {29}, {35}, {29}, {30}, {35}, {28}, {33}, {32}, {33}, {30}, // Q101 - Q111 (Q105 skipped)
+  {29}, {28}, {31}, {28}, {32}, {31, 29, 35}, {33, 32}, {35, 32, 33, 34}, {28, 33}, {31, 30, 34, 29, 29, 28, 35, 33}, // Q112 - Q121
+  {32, 33}, {32, 33}, {28, 29}, {35, 34}, {28}, {32}, {28}, {33}, {34} // Q122 - Q130
+
 };
 
 const uint8_t TOTAL_QUESTIONS = 87;
@@ -353,11 +357,11 @@ bool questionsAsked[87]  = {false};
 int  totalQuestionsAsked = 0;
 
 const uint8_t TOTAL_QUESTIONS_FIFTH = 125;
-const uint8_t TOTAL_QUESTIONS_SIXTH   = 125;
-const uint8_t TOTAL_QUESTIONS_SEVENTH = 125;
+const uint8_t TOTAL_QUESTIONS_SIXTH   = 99;
+const uint8_t TOTAL_QUESTIONS_SEVENTH = 129;
 bool questionsAskedFifth[125] = {false};
-bool questionsAskedSixth[125]   = {false};
-bool questionsAskedSeventh[125] = {false};
+bool questionsAskedSixth[99]   = {false};
+bool questionsAskedSeventh[129] = {false};
 
 // =====================================================
 // QUIZ CLASS SELECTION
@@ -490,7 +494,7 @@ const char* const quizQuestionsFifth[125][SYS_LANG_COUNT] =
   {"/Hindi/Class_5/q125_hi.wav","/English/Class_5/q125_en.wav"},
 };
 
-const char* const quizQuestionsSixth[125][SYS_LANG_COUNT] =
+const char* const quizQuestionsSixth[99][SYS_LANG_COUNT] =
 {
   {"/Hindi/Class_6/q1_hi.wav","/English/Class_6/q1_en.wav"},
   {"/Hindi/Class_6/q2_hi.wav","/English/Class_6/q2_en.wav"},
@@ -591,35 +595,9 @@ const char* const quizQuestionsSixth[125][SYS_LANG_COUNT] =
   {"/Hindi/Class_6/q97_hi.wav","/English/Class_6/q97_en.wav"},
   {"/Hindi/Class_6/q98_hi.wav","/English/Class_6/q98_en.wav"},
   {"/Hindi/Class_6/q99_hi.wav","/English/Class_6/q99_en.wav"},
-  {"/Hindi/Class_6/q100_hi.wav","/English/Class_6/q100_en.wav"},
-  {"/Hindi/Class_6/q101_hi.wav","/English/Class_6/q101_en.wav"},
-  {"/Hindi/Class_6/q102_hi.wav","/English/Class_6/q102_en.wav"},
-  {"/Hindi/Class_6/q103_hi.wav","/English/Class_6/q103_en.wav"},
-  {"/Hindi/Class_6/q104_hi.wav","/English/Class_6/q104_en.wav"},
-  {"/Hindi/Class_6/q105_hi.wav","/English/Class_6/q105_en.wav"},
-  {"/Hindi/Class_6/q106_hi.wav","/English/Class_6/q106_en.wav"},
-  {"/Hindi/Class_6/q107_hi.wav","/English/Class_6/q107_en.wav"},
-  {"/Hindi/Class_6/q108_hi.wav","/English/Class_6/q108_en.wav"},
-  {"/Hindi/Class_6/q109_hi.wav","/English/Class_6/q109_en.wav"},
-  {"/Hindi/Class_6/q110_hi.wav","/English/Class_6/q110_en.wav"},
-  {"/Hindi/Class_6/q111_hi.wav","/English/Class_6/q111_en.wav"},
-  {"/Hindi/Class_6/q112_hi.wav","/English/Class_6/q112_en.wav"},
-  {"/Hindi/Class_6/q113_hi.wav","/English/Class_6/q113_en.wav"},
-  {"/Hindi/Class_6/q114_hi.wav","/English/Class_6/q114_en.wav"},
-  {"/Hindi/Class_6/q115_hi.wav","/English/Class_6/q115_en.wav"},
-  {"/Hindi/Class_6/q116_hi.wav","/English/Class_6/q116_en.wav"},
-  {"/Hindi/Class_6/q117_hi.wav","/English/Class_6/q117_en.wav"},
-  {"/Hindi/Class_6/q118_hi.wav","/English/Class_6/q118_en.wav"},
-  {"/Hindi/Class_6/q119_hi.wav","/English/Class_6/q119_en.wav"},
-  {"/Hindi/Class_6/q120_hi.wav","/English/Class_6/q120_en.wav"},
-  {"/Hindi/Class_6/q121_hi.wav","/English/Class_6/q121_en.wav"},
-  {"/Hindi/Class_6/q122_hi.wav","/English/Class_6/q122_en.wav"},
-  {"/Hindi/Class_6/q123_hi.wav","/English/Class_6/q123_en.wav"},
-  {"/Hindi/Class_6/q124_hi.wav","/English/Class_6/q124_en.wav"},
-  {"/Hindi/Class_6/q125_hi.wav","/English/Class_6/q125_en.wav"},
 };
 
-const char* const quizQuestionsSeventh[125][SYS_LANG_COUNT] =
+const char* const quizQuestionsSeventh[129][SYS_LANG_COUNT] =
 {
   {"/Hindi/Class_7/q1_hi.wav","/English/Class_7/q1_en.wav"},
   {"/Hindi/Class_7/q2_hi.wav","/English/Class_7/q2_en.wav"},
@@ -746,6 +724,10 @@ const char* const quizQuestionsSeventh[125][SYS_LANG_COUNT] =
   {"/Hindi/Class_7/q123_hi.wav","/English/Class_7/q123_en.wav"},
   {"/Hindi/Class_7/q124_hi.wav","/English/Class_7/q124_en.wav"},
   {"/Hindi/Class_7/q125_hi.wav","/English/Class_7/q125_en.wav"},
+  {"/Hindi/Class_7/q126_hi.wav","/English/Class_7/q126_en.wav"},
+  {"/Hindi/Class_7/q127_hi.wav","/English/Class_7/q127_en.wav"},
+  {"/Hindi/Class_7/q128_hi.wav","/English/Class_7/q128_en.wav"},
+  {"/Hindi/Class_7/q129_hi.wav","/English/Class_7/q129_en.wav"},
 };
 
 String getQuizQuestionPath(int index) {
@@ -1994,7 +1976,7 @@ void vTaskWriteLEDs(void *pvParameters) {
   // job (board reset / RFID toggle / language toggle).
   bool          waitingForClassSelection = false;
   unsigned long classSelectionStartTime  = 0;
-  const unsigned long CLASS_SELECTION_TIMEOUT = 8000; // 8s to pick a class
+  const unsigned long CLASS_SELECTION_TIMEOUT = 25000; // 8s to pick a class
 
   for (;;) {
     uint64_t stable;
