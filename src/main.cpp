@@ -231,10 +231,13 @@ const char* const welcomeAudioPaths[SYS_LANG_COUNT] = { "/Hindi/welcome.wav", "/
 const char* const speakerSetupAudioPaths[SYS_LANG_COUNT] = { "/Hindi/speaker_hi.wav", "/English/speaker_eng.wav" };
 const char* const mlSwitchQuizAudioPaths[SYS_LANG_COUNT] = { "/Hindi/mlswitch_hindi.wav", "/English/switch_quiz_mode.wav" };
 const char* const mlRfidQuizAudioPaths[SYS_LANG_COUNT] = { "/Hindi/rfid_quiz_mode_hindi.wav", "/English/rfid_quiz_mode.wav" };
-
-// PLACEHOLDER 
 const char* const mlSwitchQuizFifthAudioPaths[SYS_LANG_COUNT] = { "/Hindi/quiz_mode_fifth_hi.wav", "/English/quiz_mode_fifth_en.wav" };
 const char* const mlRfidQuizFifthAudioPaths[SYS_LANG_COUNT]   = { "/Hindi/rfid_quiz_mode_fifth_hi.wav",   "/English/rfid_quiz_mode_fifth_en.wav" };
+const char* const mlSwitchQuizSixthAudioPaths[SYS_LANG_COUNT]   = { "/Hindi/quiz_mode_sixth_hi.wav",   "/English/quiz_mode_sixth_en.wav" };
+const char* const mlRfidQuizSixthAudioPaths[SYS_LANG_COUNT]     = { "/Hindi/rfid_quiz_mode_sixth_hi.wav",   "/English/rfid_quiz_mode_sixth_en.wav" };
+const char* const mlSwitchQuizSeventhAudioPaths[SYS_LANG_COUNT] = { "/Hindi/quiz_mode_seventh_hi.wav", "/English/quiz_mode_seventh_en.wav" };
+const char* const mlRfidQuizSeventhAudioPaths[SYS_LANG_COUNT]   = { "/Hindi/rfid_quiz_mode_seventh_hi.wav", "/English/rfid_quiz_mode_seventh_en.wav" };
+const char* const classSelectPromptAudioPaths[SYS_LANG_COUNT] = { "/Hindi/class_select_prompt_hi.wav", "/English/class_select_prompt_en.wav" };
 const char* const resetAudioPaths[SYS_LANG_COUNT] = { "/Hindi/reset_h.wav", "/English/reset.wav" };
 const char* const languageChangedAudioPaths[SYS_LANG_COUNT] = { "/Hindi/Hindi_lan.wav", "/English/English_lan.wav" };
 const char* const scoreIntroAudioPaths[SYS_LANG_COUNT] = { "/Hindi/final_score_hindi.wav", "/English/final_score_hindi.wav" };
@@ -311,13 +314,64 @@ const std::vector<int8_t> correctAnswersFifth[125] =
   {31,29,35},{33,32},{29,28},{35,34},{31,33}
 };
 
+const std::vector<int8_t> correctAnswersSixth[125] =
+{
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0},
+};
+
+const std::vector<int8_t> correctAnswersSeventh[125] =
+{
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0},
+  {0}, {0}, {0}, {0}, {0},
+};
+
 const uint8_t TOTAL_QUESTIONS = 87;
-const uint8_t TOTAL_QUESTIONS_FIFTH = 125;
 bool questionsAsked[87]  = {false};
-bool questionsAskedFifth[125] = {false};
 int  totalQuestionsAsked = 0;
 
-bool quizModeFifth = false;   // false = original 36-state quiz, true = Class 5 quiz
+const uint8_t TOTAL_QUESTIONS_FIFTH = 125;
+const uint8_t TOTAL_QUESTIONS_SIXTH   = 125;
+const uint8_t TOTAL_QUESTIONS_SEVENTH = 125;
+bool questionsAskedFifth[125] = {false};
+bool questionsAskedSixth[125]   = {false};
+bool questionsAskedSeventh[125] = {false};
+
+// =====================================================
+// QUIZ CLASS SELECTION
+//   QUIZ_CLASS_NONE = original 36-state quiz (single quiz-button click)
+//   QUIZ_CLASS_5/6/7 = grade-specific question banks (double-click quiz
+//   button, then press Reset/Mode/Lang to pick the class)
+// =====================================================
+enum QuizClass {
+  QUIZ_CLASS_NONE = 0,
+  QUIZ_CLASS_5    = 5,
+  QUIZ_CLASS_6    = 6,
+  QUIZ_CLASS_7    = 7
+};
+QuizClass activeQuizClass = QUIZ_CLASS_NONE;
 
 // =====================================================
 // QUIZ QUESTIONS — 87 entries × 2 languages
@@ -374,7 +428,7 @@ const char* const quizQuestionsFifth[125][SYS_LANG_COUNT] =
   {"/Hindi/Class_5/q1_hi.wav","/English/Class_5/q1_en.wav"}, {"/Hindi/Class_5/q2_hi.wav","/English/Class_5/q2_en.wav"},
   {"/Hindi/Class_5/q3_hi.wav","/English/Class_5/q3_en.wav"}, {"/Hindi/Class_5/q4_hi.wav","/English/Class_5/q4_en.wav"},
   {"/Hindi/Class_5/q5_hi.wav","/English/Class_5/q5_en.wav"}, {"/Hindi/Class_5/q6_hi.wav","/English/Class_5/q6_en.wav"},
-  {"/Hindi/Class_5/q7_hi.wav","/English/Class_5/q7_en.wav"}, {"/Hindi/Class_5/q8_hi.wav","/English/Class_5/q8_en.wav"},
+  {"/Hindi/Class_5/q7_hi.wav","/English/Class_5/q7_en.wav"}, {"/Hindi/Class _5/q8_hi.wav","/English/Class_5/q8_en.wav"},
   {"/Hindi/Class_5/q9_hi.wav","/English/Class_5/q9_en.wav"}, {"/Hindi/Class_5/q10_hi.wav","/English/Class_5/q10_en.wav"},
   {"/Hindi/Class_5/q11_hi.wav","/English/Class_5/q11_en.wav"}, {"/Hindi/Class_5/q12_hi.wav","/English/Class_5/q12_en.wav"},
   {"/Hindi/Class_5/q13_hi.wav","/English/Class_5/q13_en.wav"}, {"/Hindi/Class_5/q14_hi.wav","/English/Class_5/q14_en.wav"},
@@ -436,34 +490,343 @@ const char* const quizQuestionsFifth[125][SYS_LANG_COUNT] =
   {"/Hindi/Class_5/q125_hi.wav","/English/Class_5/q125_en.wav"},
 };
 
+const char* const quizQuestionsSixth[125][SYS_LANG_COUNT] =
+{
+  {"/Hindi/Class_6/q1_hi.wav","/English/Class_6/q1_en.wav"},
+  {"/Hindi/Class_6/q2_hi.wav","/English/Class_6/q2_en.wav"},
+  {"/Hindi/Class_6/q3_hi.wav","/English/Class_6/q3_en.wav"},
+  {"/Hindi/Class_6/q4_hi.wav","/English/Class_6/q4_en.wav"},
+  {"/Hindi/Class_6/q5_hi.wav","/English/Class_6/q5_en.wav"},
+  {"/Hindi/Class_6/q6_hi.wav","/English/Class_6/q6_en.wav"},
+  {"/Hindi/Class_6/q7_hi.wav","/English/Class_6/q7_en.wav"},
+  {"/Hindi/Class_6/q8_hi.wav","/English/Class_6/q8_en.wav"},
+  {"/Hindi/Class_6/q9_hi.wav","/English/Class_6/q9_en.wav"},
+  {"/Hindi/Class_6/q10_hi.wav","/English/Class_6/q10_en.wav"},
+  {"/Hindi/Class_6/q11_hi.wav","/English/Class_6/q11_en.wav"},
+  {"/Hindi/Class_6/q12_hi.wav","/English/Class_6/q12_en.wav"},
+  {"/Hindi/Class_6/q13_hi.wav","/English/Class_6/q13_en.wav"},
+  {"/Hindi/Class_6/q14_hi.wav","/English/Class_6/q14_en.wav"},
+  {"/Hindi/Class_6/q15_hi.wav","/English/Class_6/q15_en.wav"},
+  {"/Hindi/Class_6/q16_hi.wav","/English/Class_6/q16_en.wav"},
+  {"/Hindi/Class_6/q17_hi.wav","/English/Class_6/q17_en.wav"},
+  {"/Hindi/Class_6/q18_hi.wav","/English/Class_6/q18_en.wav"},
+  {"/Hindi/Class_6/q19_hi.wav","/English/Class_6/q19_en.wav"},
+  {"/Hindi/Class_6/q20_hi.wav","/English/Class_6/q20_en.wav"},
+  {"/Hindi/Class_6/q21_hi.wav","/English/Class_6/q21_en.wav"},
+  {"/Hindi/Class_6/q22_hi.wav","/English/Class_6/q22_en.wav"},
+  {"/Hindi/Class_6/q23_hi.wav","/English/Class_6/q23_en.wav"},
+  {"/Hindi/Class_6/q24_hi.wav","/English/Class_6/q24_en.wav"},
+  {"/Hindi/Class_6/q25_hi.wav","/English/Class_6/q25_en.wav"},
+  {"/Hindi/Class_6/q26_hi.wav","/English/Class_6/q26_en.wav"},
+  {"/Hindi/Class_6/q27_hi.wav","/English/Class_6/q27_en.wav"},
+  {"/Hindi/Class_6/q28_hi.wav","/English/Class_6/q28_en.wav"},
+  {"/Hindi/Class_6/q29_hi.wav","/English/Class_6/q29_en.wav"},
+  {"/Hindi/Class_6/q30_hi.wav","/English/Class_6/q30_en.wav"},
+  {"/Hindi/Class_6/q31_hi.wav","/English/Class_6/q31_en.wav"},
+  {"/Hindi/Class_6/q32_hi.wav","/English/Class_6/q32_en.wav"},
+  {"/Hindi/Class_6/q33_hi.wav","/English/Class_6/q33_en.wav"},
+  {"/Hindi/Class_6/q34_hi.wav","/English/Class_6/q34_en.wav"},
+  {"/Hindi/Class_6/q35_hi.wav","/English/Class_6/q35_en.wav"},
+  {"/Hindi/Class_6/q36_hi.wav","/English/Class_6/q36_en.wav"},
+  {"/Hindi/Class_6/q37_hi.wav","/English/Class_6/q37_en.wav"},
+  {"/Hindi/Class_6/q38_hi.wav","/English/Class_6/q38_en.wav"},
+  {"/Hindi/Class_6/q39_hi.wav","/English/Class_6/q39_en.wav"},
+  {"/Hindi/Class_6/q40_hi.wav","/English/Class_6/q40_en.wav"},
+  {"/Hindi/Class_6/q41_hi.wav","/English/Class_6/q41_en.wav"},
+  {"/Hindi/Class_6/q42_hi.wav","/English/Class_6/q42_en.wav"},
+  {"/Hindi/Class_6/q43_hi.wav","/English/Class_6/q43_en.wav"},
+  {"/Hindi/Class_6/q44_hi.wav","/English/Class_6/q44_en.wav"},
+  {"/Hindi/Class_6/q45_hi.wav","/English/Class_6/q45_en.wav"},
+  {"/Hindi/Class_6/q46_hi.wav","/English/Class_6/q46_en.wav"},
+  {"/Hindi/Class_6/q47_hi.wav","/English/Class_6/q47_en.wav"},
+  {"/Hindi/Class_6/q48_hi.wav","/English/Class_6/q48_en.wav"},
+  {"/Hindi/Class_6/q49_hi.wav","/English/Class_6/q49_en.wav"},
+  {"/Hindi/Class_6/q50_hi.wav","/English/Class_6/q50_en.wav"},
+  {"/Hindi/Class_6/q51_hi.wav","/English/Class_6/q51_en.wav"},
+  {"/Hindi/Class_6/q52_hi.wav","/English/Class_6/q52_en.wav"},
+  {"/Hindi/Class_6/q53_hi.wav","/English/Class_6/q53_en.wav"},
+  {"/Hindi/Class_6/q54_hi.wav","/English/Class_6/q54_en.wav"},
+  {"/Hindi/Class_6/q55_hi.wav","/English/Class_6/q55_en.wav"},
+  {"/Hindi/Class_6/q56_hi.wav","/English/Class_6/q56_en.wav"},
+  {"/Hindi/Class_6/q57_hi.wav","/English/Class_6/q57_en.wav"},
+  {"/Hindi/Class_6/q58_hi.wav","/English/Class_6/q58_en.wav"},
+  {"/Hindi/Class_6/q59_hi.wav","/English/Class_6/q59_en.wav"},
+  {"/Hindi/Class_6/q60_hi.wav","/English/Class_6/q60_en.wav"},
+  {"/Hindi/Class_6/q61_hi.wav","/English/Class_6/q61_en.wav"},
+  {"/Hindi/Class_6/q62_hi.wav","/English/Class_6/q62_en.wav"},
+  {"/Hindi/Class_6/q63_hi.wav","/English/Class_6/q63_en.wav"},
+  {"/Hindi/Class_6/q64_hi.wav","/English/Class_6/q64_en.wav"},
+  {"/Hindi/Class_6/q65_hi.wav","/English/Class_6/q65_en.wav"},
+  {"/Hindi/Class_6/q66_hi.wav","/English/Class_6/q66_en.wav"},
+  {"/Hindi/Class_6/q67_hi.wav","/English/Class_6/q67_en.wav"},
+  {"/Hindi/Class_6/q68_hi.wav","/English/Class_6/q68_en.wav"},
+  {"/Hindi/Class_6/q69_hi.wav","/English/Class_6/q69_en.wav"},
+  {"/Hindi/Class_6/q70_hi.wav","/English/Class_6/q70_en.wav"},
+  {"/Hindi/Class_6/q71_hi.wav","/English/Class_6/q71_en.wav"},
+  {"/Hindi/Class_6/q72_hi.wav","/English/Class_6/q72_en.wav"},
+  {"/Hindi/Class_6/q73_hi.wav","/English/Class_6/q73_en.wav"},
+  {"/Hindi/Class_6/q74_hi.wav","/English/Class_6/q74_en.wav"},
+  {"/Hindi/Class_6/q75_hi.wav","/English/Class_6/q75_en.wav"},
+  {"/Hindi/Class_6/q76_hi.wav","/English/Class_6/q76_en.wav"},
+  {"/Hindi/Class_6/q77_hi.wav","/English/Class_6/q77_en.wav"},
+  {"/Hindi/Class_6/q78_hi.wav","/English/Class_6/q78_en.wav"},
+  {"/Hindi/Class_6/q79_hi.wav","/English/Class_6/q79_en.wav"},
+  {"/Hindi/Class_6/q80_hi.wav","/English/Class_6/q80_en.wav"},
+  {"/Hindi/Class_6/q81_hi.wav","/English/Class_6/q81_en.wav"},
+  {"/Hindi/Class_6/q82_hi.wav","/English/Class_6/q82_en.wav"},
+  {"/Hindi/Class_6/q83_hi.wav","/English/Class_6/q83_en.wav"},
+  {"/Hindi/Class_6/q84_hi.wav","/English/Class_6/q84_en.wav"},
+  {"/Hindi/Class_6/q85_hi.wav","/English/Class_6/q85_en.wav"},
+  {"/Hindi/Class_6/q86_hi.wav","/English/Class_6/q86_en.wav"},
+  {"/Hindi/Class_6/q87_hi.wav","/English/Class_6/q87_en.wav"},
+  {"/Hindi/Class_6/q88_hi.wav","/English/Class_6/q88_en.wav"},
+  {"/Hindi/Class_6/q89_hi.wav","/English/Class_6/q89_en.wav"},
+  {"/Hindi/Class_6/q90_hi.wav","/English/Class_6/q90_en.wav"},
+  {"/Hindi/Class_6/q91_hi.wav","/English/Class_6/q91_en.wav"},
+  {"/Hindi/Class_6/q92_hi.wav","/English/Class_6/q92_en.wav"},
+  {"/Hindi/Class_6/q93_hi.wav","/English/Class_6/q93_en.wav"},
+  {"/Hindi/Class_6/q94_hi.wav","/English/Class_6/q94_en.wav"},
+  {"/Hindi/Class_6/q95_hi.wav","/English/Class_6/q95_en.wav"},
+  {"/Hindi/Class_6/q96_hi.wav","/English/Class_6/q96_en.wav"},
+  {"/Hindi/Class_6/q97_hi.wav","/English/Class_6/q97_en.wav"},
+  {"/Hindi/Class_6/q98_hi.wav","/English/Class_6/q98_en.wav"},
+  {"/Hindi/Class_6/q99_hi.wav","/English/Class_6/q99_en.wav"},
+  {"/Hindi/Class_6/q100_hi.wav","/English/Class_6/q100_en.wav"},
+  {"/Hindi/Class_6/q101_hi.wav","/English/Class_6/q101_en.wav"},
+  {"/Hindi/Class_6/q102_hi.wav","/English/Class_6/q102_en.wav"},
+  {"/Hindi/Class_6/q103_hi.wav","/English/Class_6/q103_en.wav"},
+  {"/Hindi/Class_6/q104_hi.wav","/English/Class_6/q104_en.wav"},
+  {"/Hindi/Class_6/q105_hi.wav","/English/Class_6/q105_en.wav"},
+  {"/Hindi/Class_6/q106_hi.wav","/English/Class_6/q106_en.wav"},
+  {"/Hindi/Class_6/q107_hi.wav","/English/Class_6/q107_en.wav"},
+  {"/Hindi/Class_6/q108_hi.wav","/English/Class_6/q108_en.wav"},
+  {"/Hindi/Class_6/q109_hi.wav","/English/Class_6/q109_en.wav"},
+  {"/Hindi/Class_6/q110_hi.wav","/English/Class_6/q110_en.wav"},
+  {"/Hindi/Class_6/q111_hi.wav","/English/Class_6/q111_en.wav"},
+  {"/Hindi/Class_6/q112_hi.wav","/English/Class_6/q112_en.wav"},
+  {"/Hindi/Class_6/q113_hi.wav","/English/Class_6/q113_en.wav"},
+  {"/Hindi/Class_6/q114_hi.wav","/English/Class_6/q114_en.wav"},
+  {"/Hindi/Class_6/q115_hi.wav","/English/Class_6/q115_en.wav"},
+  {"/Hindi/Class_6/q116_hi.wav","/English/Class_6/q116_en.wav"},
+  {"/Hindi/Class_6/q117_hi.wav","/English/Class_6/q117_en.wav"},
+  {"/Hindi/Class_6/q118_hi.wav","/English/Class_6/q118_en.wav"},
+  {"/Hindi/Class_6/q119_hi.wav","/English/Class_6/q119_en.wav"},
+  {"/Hindi/Class_6/q120_hi.wav","/English/Class_6/q120_en.wav"},
+  {"/Hindi/Class_6/q121_hi.wav","/English/Class_6/q121_en.wav"},
+  {"/Hindi/Class_6/q122_hi.wav","/English/Class_6/q122_en.wav"},
+  {"/Hindi/Class_6/q123_hi.wav","/English/Class_6/q123_en.wav"},
+  {"/Hindi/Class_6/q124_hi.wav","/English/Class_6/q124_en.wav"},
+  {"/Hindi/Class_6/q125_hi.wav","/English/Class_6/q125_en.wav"},
+};
+
+const char* const quizQuestionsSeventh[125][SYS_LANG_COUNT] =
+{
+  {"/Hindi/Class_7/q1_hi.wav","/English/Class_7/q1_en.wav"},
+  {"/Hindi/Class_7/q2_hi.wav","/English/Class_7/q2_en.wav"},
+  {"/Hindi/Class_7/q3_hi.wav","/English/Class_7/q3_en.wav"},
+  {"/Hindi/Class_7/q4_hi.wav","/English/Class_7/q4_en.wav"},
+  {"/Hindi/Class_7/q5_hi.wav","/English/Class_7/q5_en.wav"},
+  {"/Hindi/Class_7/q6_hi.wav","/English/Class_7/q6_en.wav"},
+  {"/Hindi/Class_7/q7_hi.wav","/English/Class_7/q7_en.wav"},
+  {"/Hindi/Class_7/q8_hi.wav","/English/Class_7/q8_en.wav"},
+  {"/Hindi/Class_7/q9_hi.wav","/English/Class_7/q9_en.wav"},
+  {"/Hindi/Class_7/q10_hi.wav","/English/Class_7/q10_en.wav"},
+  {"/Hindi/Class_7/q11_hi.wav","/English/Class_7/q11_en.wav"},
+  {"/Hindi/Class_7/q12_hi.wav","/English/Class_7/q12_en.wav"},
+  {"/Hindi/Class_7/q13_hi.wav","/English/Class_7/q13_en.wav"},
+  {"/Hindi/Class_7/q14_hi.wav","/English/Class_7/q14_en.wav"},
+  {"/Hindi/Class_7/q15_hi.wav","/English/Class_7/q15_en.wav"},
+  {"/Hindi/Class_7/q16_hi.wav","/English/Class_7/q16_en.wav"},
+  {"/Hindi/Class_7/q17_hi.wav","/English/Class_7/q17_en.wav"},
+  {"/Hindi/Class_7/q18_hi.wav","/English/Class_7/q18_en.wav"},
+  {"/Hindi/Class_7/q19_hi.wav","/English/Class_7/q19_en.wav"},
+  {"/Hindi/Class_7/q20_hi.wav","/English/Class_7/q20_en.wav"},
+  {"/Hindi/Class_7/q21_hi.wav","/English/Class_7/q21_en.wav"},
+  {"/Hindi/Class_7/q22_hi.wav","/English/Class_7/q22_en.wav"},
+  {"/Hindi/Class_7/q23_hi.wav","/English/Class_7/q23_en.wav"},
+  {"/Hindi/Class_7/q24_hi.wav","/English/Class_7/q24_en.wav"},
+  {"/Hindi/Class_7/q25_hi.wav","/English/Class_7/q25_en.wav"},
+  {"/Hindi/Class_7/q26_hi.wav","/English/Class_7/q26_en.wav"},
+  {"/Hindi/Class_7/q27_hi.wav","/English/Class_7/q27_en.wav"},
+  {"/Hindi/Class_7/q28_hi.wav","/English/Class_7/q28_en.wav"},
+  {"/Hindi/Class_7/q29_hi.wav","/English/Class_7/q29_en.wav"},
+  {"/Hindi/Class_7/q30_hi.wav","/English/Class_7/q30_en.wav"},
+  {"/Hindi/Class_7/q31_hi.wav","/English/Class_7/q31_en.wav"},
+  {"/Hindi/Class_7/q32_hi.wav","/English/Class_7/q32_en.wav"},
+  {"/Hindi/Class_7/q33_hi.wav","/English/Class_7/q33_en.wav"},
+  {"/Hindi/Class_7/q34_hi.wav","/English/Class_7/q34_en.wav"},
+  {"/Hindi/Class_7/q35_hi.wav","/English/Class_7/q35_en.wav"},
+  {"/Hindi/Class_7/q36_hi.wav","/English/Class_7/q36_en.wav"},
+  {"/Hindi/Class_7/q37_hi.wav","/English/Class_7/q37_en.wav"},
+  {"/Hindi/Class_7/q38_hi.wav","/English/Class_7/q38_en.wav"},
+  {"/Hindi/Class_7/q39_hi.wav","/English/Class_7/q39_en.wav"},
+  {"/Hindi/Class_7/q40_hi.wav","/English/Class_7/q40_en.wav"},
+  {"/Hindi/Class_7/q41_hi.wav","/English/Class_7/q41_en.wav"},
+  {"/Hindi/Class_7/q42_hi.wav","/English/Class_7/q42_en.wav"},
+  {"/Hindi/Class_7/q43_hi.wav","/English/Class_7/q43_en.wav"},
+  {"/Hindi/Class_7/q44_hi.wav","/English/Class_7/q44_en.wav"},
+  {"/Hindi/Class_7/q45_hi.wav","/English/Class_7/q45_en.wav"},
+  {"/Hindi/Class_7/q46_hi.wav","/English/Class_7/q46_en.wav"},
+  {"/Hindi/Class_7/q47_hi.wav","/English/Class_7/q47_en.wav"},
+  {"/Hindi/Class_7/q48_hi.wav","/English/Class_7/q48_en.wav"},
+  {"/Hindi/Class_7/q49_hi.wav","/English/Class_7/q49_en.wav"},
+  {"/Hindi/Class_7/q50_hi.wav","/English/Class_7/q50_en.wav"},
+  {"/Hindi/Class_7/q51_hi.wav","/English/Class_7/q51_en.wav"},
+  {"/Hindi/Class_7/q52_hi.wav","/English/Class_7/q52_en.wav"},
+  {"/Hindi/Class_7/q53_hi.wav","/English/Class_7/q53_en.wav"},
+  {"/Hindi/Class_7/q54_hi.wav","/English/Class_7/q54_en.wav"},
+  {"/Hindi/Class_7/q55_hi.wav","/English/Class_7/q55_en.wav"},
+  {"/Hindi/Class_7/q56_hi.wav","/English/Class_7/q56_en.wav"},
+  {"/Hindi/Class_7/q57_hi.wav","/English/Class_7/q57_en.wav"},
+  {"/Hindi/Class_7/q58_hi.wav","/English/Class_7/q58_en.wav"},
+  {"/Hindi/Class_7/q59_hi.wav","/English/Class_7/q59_en.wav"},
+  {"/Hindi/Class_7/q60_hi.wav","/English/Class_7/q60_en.wav"},
+  {"/Hindi/Class_7/q61_hi.wav","/English/Class_7/q61_en.wav"},
+  {"/Hindi/Class_7/q62_hi.wav","/English/Class_7/q62_en.wav"},
+  {"/Hindi/Class_7/q63_hi.wav","/English/Class_7/q63_en.wav"},
+  {"/Hindi/Class_7/q64_hi.wav","/English/Class_7/q64_en.wav"},
+  {"/Hindi/Class_7/q65_hi.wav","/English/Class_7/q65_en.wav"},
+  {"/Hindi/Class_7/q66_hi.wav","/English/Class_7/q66_en.wav"},
+  {"/Hindi/Class_7/q67_hi.wav","/English/Class_7/q67_en.wav"},
+  {"/Hindi/Class_7/q68_hi.wav","/English/Class_7/q68_en.wav"},
+  {"/Hindi/Class_7/q69_hi.wav","/English/Class_7/q69_en.wav"},
+  {"/Hindi/Class_7/q70_hi.wav","/English/Class_7/q70_en.wav"},
+  {"/Hindi/Class_7/q71_hi.wav","/English/Class_7/q71_en.wav"},
+  {"/Hindi/Class_7/q72_hi.wav","/English/Class_7/q72_en.wav"},
+  {"/Hindi/Class_7/q73_hi.wav","/English/Class_7/q73_en.wav"},
+  {"/Hindi/Class_7/q74_hi.wav","/English/Class_7/q74_en.wav"},
+  {"/Hindi/Class_7/q75_hi.wav","/English/Class_7/q75_en.wav"},
+  {"/Hindi/Class_7/q76_hi.wav","/English/Class_7/q76_en.wav"},
+  {"/Hindi/Class_7/q77_hi.wav","/English/Class_7/q77_en.wav"},
+  {"/Hindi/Class_7/q78_hi.wav","/English/Class_7/q78_en.wav"},
+  {"/Hindi/Class_7/q79_hi.wav","/English/Class_7/q79_en.wav"},
+  {"/Hindi/Class_7/q80_hi.wav","/English/Class_7/q80_en.wav"},
+  {"/Hindi/Class_7/q81_hi.wav","/English/Class_7/q81_en.wav"},
+  {"/Hindi/Class_7/q82_hi.wav","/English/Class_7/q82_en.wav"},
+  {"/Hindi/Class_7/q83_hi.wav","/English/Class_7/q83_en.wav"},
+  {"/Hindi/Class_7/q84_hi.wav","/English/Class_7/q84_en.wav"},
+  {"/Hindi/Class_7/q85_hi.wav","/English/Class_7/q85_en.wav"},
+  {"/Hindi/Class_7/q86_hi.wav","/English/Class_7/q86_en.wav"},
+  {"/Hindi/Class_7/q87_hi.wav","/English/Class_7/q87_en.wav"},
+  {"/Hindi/Class_7/q88_hi.wav","/English/Class_7/q88_en.wav"},
+  {"/Hindi/Class_7/q89_hi.wav","/English/Class_7/q89_en.wav"},
+  {"/Hindi/Class_7/q90_hi.wav","/English/Class_7/q90_en.wav"},
+  {"/Hindi/Class_7/q91_hi.wav","/English/Class_7/q91_en.wav"},
+  {"/Hindi/Class_7/q92_hi.wav","/English/Class_7/q92_en.wav"},
+  {"/Hindi/Class_7/q93_hi.wav","/English/Class_7/q93_en.wav"},
+  {"/Hindi/Class_7/q94_hi.wav","/English/Class_7/q94_en.wav"},
+  {"/Hindi/Class_7/q95_hi.wav","/English/Class_7/q95_en.wav"},
+  {"/Hindi/Class_7/q96_hi.wav","/English/Class_7/q96_en.wav"},
+  {"/Hindi/Class_7/q97_hi.wav","/English/Class_7/q97_en.wav"},
+  {"/Hindi/Class_7/q98_hi.wav","/English/Class_7/q98_en.wav"},
+  {"/Hindi/Class_7/q99_hi.wav","/English/Class_7/q99_en.wav"},
+  {"/Hindi/Class_7/q100_hi.wav","/English/Class_7/q100_en.wav"},
+  {"/Hindi/Class_7/q101_hi.wav","/English/Class_7/q101_en.wav"},
+  {"/Hindi/Class_7/q102_hi.wav","/English/Class_7/q102_en.wav"},
+  {"/Hindi/Class_7/q103_hi.wav","/English/Class_7/q103_en.wav"},
+  {"/Hindi/Class_7/q104_hi.wav","/English/Class_7/q104_en.wav"},
+  {"/Hindi/Class_7/q105_hi.wav","/English/Class_7/q105_en.wav"},
+  {"/Hindi/Class_7/q106_hi.wav","/English/Class_7/q106_en.wav"},
+  {"/Hindi/Class_7/q107_hi.wav","/English/Class_7/q107_en.wav"},
+  {"/Hindi/Class_7/q108_hi.wav","/English/Class_7/q108_en.wav"},
+  {"/Hindi/Class_7/q109_hi.wav","/English/Class_7/q109_en.wav"},
+  {"/Hindi/Class_7/q110_hi.wav","/English/Class_7/q110_en.wav"},
+  {"/Hindi/Class_7/q111_hi.wav","/English/Class_7/q111_en.wav"},
+  {"/Hindi/Class_7/q112_hi.wav","/English/Class_7/q112_en.wav"},
+  {"/Hindi/Class_7/q113_hi.wav","/English/Class_7/q113_en.wav"},
+  {"/Hindi/Class_7/q114_hi.wav","/English/Class_7/q114_en.wav"},
+  {"/Hindi/Class_7/q115_hi.wav","/English/Class_7/q115_en.wav"},
+  {"/Hindi/Class_7/q116_hi.wav","/English/Class_7/q116_en.wav"},
+  {"/Hindi/Class_7/q117_hi.wav","/English/Class_7/q117_en.wav"},
+  {"/Hindi/Class_7/q118_hi.wav","/English/Class_7/q118_en.wav"},
+  {"/Hindi/Class_7/q119_hi.wav","/English/Class_7/q119_en.wav"},
+  {"/Hindi/Class_7/q120_hi.wav","/English/Class_7/q120_en.wav"},
+  {"/Hindi/Class_7/q121_hi.wav","/English/Class_7/q121_en.wav"},
+  {"/Hindi/Class_7/q122_hi.wav","/English/Class_7/q122_en.wav"},
+  {"/Hindi/Class_7/q123_hi.wav","/English/Class_7/q123_en.wav"},
+  {"/Hindi/Class_7/q124_hi.wav","/English/Class_7/q124_en.wav"},
+  {"/Hindi/Class_7/q125_hi.wav","/English/Class_7/q125_en.wav"},
+};
+
 String getQuizQuestionPath(int index) {
-  if (quizModeFifth) {
-    if (index < 0 || index >= TOTAL_QUESTIONS_FIFTH) return String("");
-    return getLocalizedAudio(quizQuestionsFifth[index]);
+  switch (activeQuizClass) {
+    case QUIZ_CLASS_5:
+      if (index < 0 || index >= TOTAL_QUESTIONS_FIFTH) return String("");
+      return getLocalizedAudio(quizQuestionsFifth[index]);
+    case QUIZ_CLASS_6:
+      if (index < 0 || index >= TOTAL_QUESTIONS_SIXTH) return String("");
+      return getLocalizedAudio(quizQuestionsSixth[index]);
+    case QUIZ_CLASS_7:
+      if (index < 0 || index >= TOTAL_QUESTIONS_SEVENTH) return String("");
+      return getLocalizedAudio(quizQuestionsSeventh[index]);
+    default:
+      if (index < 0 || index >= TOTAL_QUESTIONS) return String("");
+      return getLocalizedAudio(quizQuestions[index]);
   }
-  if (index < 0 || index >= TOTAL_QUESTIONS) return String("");
-  return getLocalizedAudio(quizQuestions[index]);
 }
 
 bool isCorrectAnswer(int8_t answer, int questionIndex) {
-  const std::vector<int8_t>& v = quizModeFifth ? correctAnswersFifth[questionIndex] : correctAnswers[questionIndex];
-  return std::find(v.begin(), v.end(), answer) != v.end();
+  const std::vector<int8_t>* v;
+  switch (activeQuizClass) {
+    case QUIZ_CLASS_5: v = &correctAnswersFifth[questionIndex];   break;
+    case QUIZ_CLASS_6: v = &correctAnswersSixth[questionIndex];   break;
+    case QUIZ_CLASS_7: v = &correctAnswersSeventh[questionIndex]; break;
+    default:           v = &correctAnswers[questionIndex];        break;
+  }
+  return std::find(v->begin(), v->end(), answer) != v->end();
 }
 int8_t getFirstCorrectAnswer(int questionIndex) {
-  return quizModeFifth ? correctAnswersFifth[questionIndex][0] : correctAnswers[questionIndex][0];
+  switch (activeQuizClass) {
+    case QUIZ_CLASS_5: return correctAnswersFifth[questionIndex][0];
+    case QUIZ_CLASS_6: return correctAnswersSixth[questionIndex][0];
+    case QUIZ_CLASS_7: return correctAnswersSeventh[questionIndex][0];
+    default:           return correctAnswers[questionIndex][0];
+  }
 }
 
 int findNextSequentialQuestion() {
-  if (quizModeFifth) {
-    for (int i = 0; i < TOTAL_QUESTIONS_FIFTH; i++) {
-      if (!questionsAskedFifth[i]) return i;
-    }
-    return -1;
+  int   total;
+  bool* asked;
+  switch (activeQuizClass) {
+    case QUIZ_CLASS_5: total = TOTAL_QUESTIONS_FIFTH;   asked = questionsAskedFifth;   break;
+    case QUIZ_CLASS_6: total = TOTAL_QUESTIONS_SIXTH;   asked = questionsAskedSixth;   break;
+    case QUIZ_CLASS_7: total = TOTAL_QUESTIONS_SEVENTH; asked = questionsAskedSeventh; break;
+    default:           total = TOTAL_QUESTIONS;         asked = questionsAsked;        break;
   }
-  for (int i = 0; i < TOTAL_QUESTIONS; i++) {
-    if (!questionsAsked[i]) return i;
+  for (int i = 0; i < total; i++) {
+    if (!asked[i]) return i;
   }
   return -1;
+}
+
+// Marks the current question as asked (in whichever bank is active) and
+// bumps the running "questions asked" counter used for numbering.
+void markQuestionAsked(int index) {
+  if (index < 0) return;
+  switch (activeQuizClass) {
+    case QUIZ_CLASS_5:
+      if (!questionsAskedFifth[index])   { questionsAskedFifth[index]   = true; totalQuestionsAsked++; }
+      break;
+    case QUIZ_CLASS_6:
+      if (!questionsAskedSixth[index])   { questionsAskedSixth[index]   = true; totalQuestionsAsked++; }
+      break;
+    case QUIZ_CLASS_7:
+      if (!questionsAskedSeventh[index]) { questionsAskedSeventh[index] = true; totalQuestionsAsked++; }
+      break;
+    default:
+      if (!questionsAsked[index])        { questionsAsked[index]        = true; totalQuestionsAsked++; }
+      break;
+  }
+}
+
+// Clears the "asked" tracking array for whichever bank is currently active.
+void resetAskedArray() {
+  switch (activeQuizClass) {
+    case QUIZ_CLASS_5: memset(questionsAskedFifth,   0, sizeof(questionsAskedFifth));   break;
+    case QUIZ_CLASS_6: memset(questionsAskedSixth,   0, sizeof(questionsAskedSixth));   break;
+    case QUIZ_CLASS_7: memset(questionsAskedSeventh, 0, sizeof(questionsAskedSeventh)); break;
+    default:           memset(questionsAsked,        0, sizeof(questionsAsked));        break;
+  }
 }
 
 // =====================================================
@@ -500,9 +863,12 @@ volatile int8_t        pendingCorrectIdx = -1;
 
 String getModeAnnouncement() {
   if (quizMode) {
-    if (quizModeFifth)
-      return getLocalizedAudio(rfidMode ? mlRfidQuizFifthAudioPaths : mlSwitchQuizFifthAudioPaths);
-    return getLocalizedAudio(rfidMode ? mlRfidQuizAudioPaths : mlSwitchQuizAudioPaths);
+    switch (activeQuizClass) {
+      case QUIZ_CLASS_5: return getLocalizedAudio(rfidMode ? mlRfidQuizFifthAudioPaths   : mlSwitchQuizFifthAudioPaths);
+      case QUIZ_CLASS_6: return getLocalizedAudio(rfidMode ? mlRfidQuizSixthAudioPaths   : mlSwitchQuizSixthAudioPaths);
+      case QUIZ_CLASS_7: return getLocalizedAudio(rfidMode ? mlRfidQuizSeventhAudioPaths : mlSwitchQuizSeventhAudioPaths);
+      default:           return getLocalizedAudio(rfidMode ? mlRfidQuizAudioPaths        : mlSwitchQuizAudioPaths);
+    }
   }
   return getLocalizedAudio(rfidMode ? rfidPlayModeAudioPaths : switchPlayModeAudioPaths);
 }
@@ -607,7 +973,7 @@ void announceScore();
 void continueScoreAnnouncement();
 void processAnswer(int8_t physicalSwitch);
 void exitQuizMode();
-void enterQuizModeFifth();
+void enterQuizModeClass(int classId);
 void resetBoard();
 String getUidString(MFRC522::Uid &u);
 String readBlock4String();
@@ -1056,7 +1422,7 @@ void resetBoard() {
   streamPaused = localPaused = true;
   currentLanguage      = SYS_LANG_HINDI;
   quizMode             = false;
-  quizModeFifth        = false;
+  activeQuizClass      = QUIZ_CLASS_NONE;
   rfidMode             = false;
   disableRFID();
   quizState            = QUIZ_IDLE;
@@ -1071,7 +1437,9 @@ void resetBoard() {
   wrongAnswersCount    = 0;
   totalQuestionsAnswered = 0;
   memset(questionsAsked, 0, sizeof(questionsAsked));
-  memset(questionsAskedFifth, 0 , sizeof(questionsAskedFifth));
+  memset(questionsAskedFifth,   0, sizeof(questionsAskedFifth));
+  memset(questionsAskedSixth,   0, sizeof(questionsAskedSixth));
+  memset(questionsAskedSeventh, 0, sizeof(questionsAskedSeventh));
   totalQuestionsAsked  = 0;
   ledState = LED_ALL_OFF;
   write595_all(ledState);
@@ -1083,14 +1451,14 @@ void resetBoard() {
 // =====================================================
 // Quiz mode
 // =====================================================
-void enterQuizModeCommon(bool fifth) {
-  Serial.println(fifth ? "\n=== QUIZ MODE (CLASS 5) ===" : "\n=== QUIZ MODE ===");
+void enterQuizModeCommon(int classId) {
+  if (classId == QUIZ_CLASS_NONE) Serial.println("\n=== QUIZ MODE ===");
+  else { Serial.print("\n=== QUIZ MODE (CLASS "); Serial.print(classId); Serial.println(") ==="); }
   safeCloseFile(audioFile);
   streamPaused = localPaused = true;
-  quizMode      = true;
-  quizModeFifth = fifth;
-  if (fifth) memset(questionsAskedFifth, 0, sizeof(questionsAskedFifth));
-  else       memset(questionsAsked,      0, sizeof(questionsAsked));
+  quizMode        = true;
+  activeQuizClass = (QuizClass)classId;
+  resetAskedArray();
   totalQuestionsAsked    = 0;
   correctAnswersCount    = 0;
   wrongAnswersCount      = 0;
@@ -1106,22 +1474,12 @@ void enterQuizModeCommon(bool fifth) {
   quizState = QUIZ_IDLE;
   openAndStartAudio(getModeAnnouncement(), true);
 }
-void enterQuizMode()      { enterQuizModeCommon(false); }
-void enterQuizModeFifth() { enterQuizModeCommon(true);  }
+void enterQuizMode()             { enterQuizModeCommon(QUIZ_CLASS_NONE); }
+void enterQuizModeClass(int classId) { enterQuizModeCommon(classId); }
 
 void playQuestion() {
   if (!quizMode || currentQuestionIndex < 0) return;
-  if (quizModeFifth) {
-    if (!questionsAskedFifth[currentQuestionIndex]) {
-      questionsAskedFifth[currentQuestionIndex] = true;
-      totalQuestionsAsked++;
-    }
-  } else {
-    if (!questionsAsked[currentQuestionIndex]) {
-      questionsAsked[currentQuestionIndex] = true;
-      totalQuestionsAsked++;
-    }
-  }
+  markQuestionAsked(currentQuestionIndex);
   resetAnswerLEDs();
   ledState = LED_ALL_OFF;
   write595_all(ledState);
@@ -1148,8 +1506,7 @@ void nextQuestion() {
   write595_all(ledState);
   currentQuestionIndex = findNextSequentialQuestion();
   if (currentQuestionIndex == -1) {
-    if (quizModeFifth) memset(questionsAskedFifth, 0, sizeof(questionsAskedFifth));
-    else               memset(questionsAsked,      0, sizeof(questionsAsked));
+    resetAskedArray();
     totalQuestionsAsked = 0;
     Serial.println("\n=== QUESTIONS RESET ===");
     currentQuestionIndex = findNextSequentialQuestion();
@@ -1207,7 +1564,7 @@ void exitQuizMode() {
   safeCloseFile(audioFile);
   streamPaused = localPaused = true;
   quizMode             = false;
-  quizModeFifth        = false;
+  activeQuizClass      = QUIZ_CLASS_NONE;
   currentQuestionIndex = -1;
   currentTrackIndex    = -1;
   playingScore         = false;
@@ -1632,6 +1989,13 @@ void vTaskWriteLEDs(void *pvParameters) {
   bool          quizButtonPendingSingle = false;
   unsigned long quizButtonPressTime     = 0;
 
+  // Class-selection window: opened by a quiz-button double-click. While
+  // open, Reset/Mode/Lang pick Class 5/6/7 instead of doing their normal
+  // job (board reset / RFID toggle / language toggle).
+  bool          waitingForClassSelection = false;
+  unsigned long classSelectionStartTime  = 0;
+  const unsigned long CLASS_SELECTION_TIMEOUT = 8000; // 8s to pick a class
+
   for (;;) {
     uint64_t stable;
     if (xQueueReceive(buttonQueue, &stable, pdMS_TO_TICKS(50))) {
@@ -1642,10 +2006,16 @@ void vTaskWriteLEDs(void *pvParameters) {
       if (pressed & (1ULL << QUIZ_BUTTON_NUM)) {
         unsigned long nowPress = millis();
         if (quizButtonPendingSingle && (nowPress - quizButtonLastPressTime) <= DOUBLE_PRESS_WINDOW) {
-          // Double-click -> Class 5 quiz
+          // Double-click -> open the "pick a class" selection window.
+          // Reset/Mode/Lang will pick Class 5/6/7 on their next press.
           quizButtonPendingSingle = false;
           if (quizMode) exitQuizMode();
-          enterQuizModeFifth();
+          waitingForClassSelection = true;
+          classSelectionStartTime  = nowPress;
+          Serial.println("\n=== SELECT CLASS: Reset=5, Mode=6, Lang=7 ===");
+          ledState = LED_ALL_ON;
+          write595_all(ledState);
+          openAndStartAudio(getLocalizedAudio(classSelectPromptAudioPaths), true);
         } else {
           quizButtonPendingSingle = true;
           quizButtonPressTime     = nowPress;
@@ -1653,11 +2023,38 @@ void vTaskWriteLEDs(void *pvParameters) {
         quizButtonLastPressTime = nowPress;
       }
 
-      if (pressed & (1ULL << RESET_BUTTON_NUM)) {
-        resetButtonPressTime = millis();
-        resetButtonHeld      = true;
-        resetHoldFired       = false;
+      if (waitingForClassSelection) {
+        // Consume Reset/Mode/Lang presses as the class pick instead of
+        // letting them fall through to their normal behavior below.
+        if (pressed & (1ULL << RESET_BUTTON_NUM)) {
+          waitingForClassSelection = false;
+          enterQuizModeClass(QUIZ_CLASS_5);
+        } else if (pressed & (1ULL << MODE_BUTTON_NUM)) {
+          waitingForClassSelection = false;
+          enterQuizModeClass(QUIZ_CLASS_6);
+        } else if (pressed & (1ULL << LANG_BUTTON_NUM)) {
+          waitingForClassSelection = false;
+          enterQuizModeClass(QUIZ_CLASS_7);
+        }
+      } else {
+        if (pressed & (1ULL << RESET_BUTTON_NUM)) {
+          resetButtonPressTime = millis();
+          resetButtonHeld      = true;
+          resetHoldFired       = false;
+        }
+
+        if (pressed & (1ULL << MODE_BUTTON_NUM)) {
+          toggleRFIDMode();
+        }
+
+        if (pressed & (1ULL << LANG_BUTTON_NUM)) {
+          SystemLanguage newLang = (currentLanguage == SYS_LANG_HINDI) ? SYS_LANG_ENGLISH : SYS_LANG_HINDI;
+          Serial.print("Lang: toggling to ");
+          Serial.println(languageNames[newLang]);
+          selectLanguage(newLang);
+        }
       }
+
       if (released & (1ULL << RESET_BUTTON_NUM)) {
         if (resetButtonHeld && !resetHoldFired) {
           resetBoard();
@@ -1665,21 +2062,11 @@ void vTaskWriteLEDs(void *pvParameters) {
         resetButtonHeld = false;
       }
 
-      if (pressed & (1ULL << MODE_BUTTON_NUM)) {
-        toggleRFIDMode();
-      }
-
-      if (pressed & (1ULL << LANG_BUTTON_NUM)) {
-        SystemLanguage newLang = (currentLanguage == SYS_LANG_HINDI) ? SYS_LANG_ENGLISH : SYS_LANG_HINDI;
-        Serial.print("Lang: toggling to ");
-        Serial.println(languageNames[newLang]);
-        selectLanguage(newLang);
-      }
-
       for (uint8_t i = 0; i < 40; i++) {
         if (!(pressed & (1ULL << i))) continue;
         if (i == QUIZ_BUTTON_NUM || i == RESET_BUTTON_NUM || i == MODE_BUTTON_NUM || i == LANG_BUTTON_NUM) continue;
         if (rfidMode) continue;
+        if (waitingForClassSelection) continue; // ignore state buttons while picking a class
 
         int8_t physical = buttonToPhysical[i];
         if (physical < 0) continue;
@@ -1719,6 +2106,15 @@ void vTaskWriteLEDs(void *pvParameters) {
     if (quizButtonPendingSingle && (millis() - quizButtonPressTime > DOUBLE_PRESS_WINDOW)) {
       quizButtonPendingSingle = false;
       quizMode ? exitQuizMode() : enterQuizMode();
+    }
+
+    if (waitingForClassSelection && (millis() - classSelectionStartTime > CLASS_SELECTION_TIMEOUT)) {
+      // Nobody picked a class in time; back out quietly to normal mode.
+      waitingForClassSelection = false;
+      Serial.println("Class selection timed out");
+      ledState = LED_ALL_OFF;
+      write595_all(ledState);
+      openAndStartAudio(getModeAnnouncement(), true);
     }
   }
 }
