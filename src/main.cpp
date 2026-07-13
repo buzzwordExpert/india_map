@@ -381,10 +381,10 @@ QuizClass activeQuizClass = QUIZ_CLASS_NONE;
 // QUIZ QUESTIONS — 87 entries × 2 languages
 // =====================================================
 const char* const quizQuestions[87][SYS_LANG_COUNT] = {
-  {"/Hindi/q1_hi.wav",  "/English/q1_en.wav"},  {"/Hindi/q2h.wav",  "/English/q2e.wav"},
-  {"/Hindi/q3_hi.wav",  "/English/q3_en.wav"},  {"/Hindi/q4h.wav",  "/English/q4e.wav"},
-  {"/Hindi/q5_hi.wav",  "/English/q5_en.wav"},  {"/Hindi/q6h.wav",  "/English/q6e.wav"},
-  {"/Hindi/q7_hi.wav",  "/English/q7_en.wav"},  {"/Hindi/q8h.wav",  "/English/q8e.wav"},
+  {"/Hindi/q1_hi.wav",  "/English/q1_en.wav"},  {"/Hindi/q2_hi.wav",  "/English/q2_en.wav"},
+  {"/Hindi/q3_hi.wav",  "/English/q3_en.wav"},  {"/Hindi/q4_hi.wav",  "/English/q4_en.wav"},
+  {"/Hindi/q5_hi.wav",  "/English/q5_en.wav"},  {"/Hindi/q6_hi.wav",  "/English/q6_en.wav"},
+  {"/Hindi/q7_hi.wav",  "/English/q7_en.wav"},  {"/Hindi/q8_hi.wav",  "/English/q8_en.wav"},
   {"/Hindi/q9_hi.wav",  "/English/q9_en.wav"},  {"/Hindi/q10_hi.wav", "/English/q10_en.wav"},
   {"/Hindi/q11_hi.wav", "/English/q11_en.wav"}, {"/Hindi/q12_hi.wav", "/English/q12_en.wav"},
   {"/Hindi/q13_hi.wav", "/English/q13_en.wav"}, {"/Hindi/q14_hi.wav", "/English/q14_en.wav"},
