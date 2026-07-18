@@ -432,7 +432,7 @@ const char* const quizQuestionsFifth[125][SYS_LANG_COUNT] =
   {"/Hindi/Class_5/q1_hi.wav","/English/Class_5/q1_en.wav"}, {"/Hindi/Class_5/q2_hi.wav","/English/Class_5/q2_en.wav"},
   {"/Hindi/Class_5/q3_hi.wav","/English/Class_5/q3_en.wav"}, {"/Hindi/Class_5/q4_hi.wav","/English/Class_5/q4_en.wav"},
   {"/Hindi/Class_5/q5_hi.wav","/English/Class_5/q5_en.wav"}, {"/Hindi/Class_5/q6_hi.wav","/English/Class_5/q6_en.wav"},
-  {"/Hindi/Class_5/q7_hi.wav","/English/Class_5/q7_en.wav"}, {"/Hindi/Class _5/q8_hi.wav","/English/Class_5/q8_en.wav"},
+  {"/Hindi/Class_5/q7_hi.wav","/English/Class_5/q7_en.wav"}, {"/Hindi/Class_5/q8_hi.wav","/English/Class_5/q8_en.wav"},
   {"/Hindi/Class_5/q9_hi.wav","/English/Class_5/q9_en.wav"}, {"/Hindi/Class_5/q10_hi.wav","/English/Class_5/q10_en.wav"},
   {"/Hindi/Class_5/q11_hi.wav","/English/Class_5/q11_en.wav"}, {"/Hindi/Class_5/q12_hi.wav","/English/Class_5/q12_en.wav"},
   {"/Hindi/Class_5/q13_hi.wav","/English/Class_5/q13_en.wav"}, {"/Hindi/Class_5/q14_hi.wav","/English/Class_5/q14_en.wav"},
